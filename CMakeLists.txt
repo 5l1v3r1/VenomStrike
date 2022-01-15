@@ -1,7 +1,7 @@
 ﻿# CMakeList.txt : CMake project for VenomStrike, include source and define
 # project specific logic here.
 #
-cmake_minimum_required (VERSION 3.8)
+cmake_minimum_required (VERSION 3.15)
 
 project (VenomStrike)
 
@@ -16,17 +16,24 @@ file(GLOB_RECURSE SOURCES
     "${PROJECT_SOURCE_DIR}/Framework/Source/*.h"
 )
 
+option(ZYDIS_BUILD_TOOLS "" OFF)
+option(ZYDIS_BUILD_EXAMPLES "" OFF)
+
 message(${SOURCES})
 
 # Add source to this project's executable.
 add_executable (${PROJECT_NAME} ${SOURCES})
 
-include_directories(external)
+add_subdirectory(External/Zydis)
+
+# include_directories(External)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     ${PROJECT_SOURCE_DIR}/Source
-    
+    ${PROJECT_SOURCE_DIR}/External/zydis/include
     )
  
+target_link_libraries("VenomStrike" PRIVATE "Zydis")
+
 target_link_directories(${PROJECT_NAME} PUBLIC
 )
