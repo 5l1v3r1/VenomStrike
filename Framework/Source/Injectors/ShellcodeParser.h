@@ -2,6 +2,8 @@
 
 #include <vector>
 #include <array>
+#include <cstdint>
+
 namespace VS
 {
 	class VShellcodeParser

@@ -24,7 +24,7 @@ message(${SOURCES})
 # Add source to this project's executable.
 add_executable (${PROJECT_NAME} ${SOURCES})
 
-add_subdirectory(External/Zydis)
+add_subdirectory(External/zydis)
 
 # include_directories(External)
 

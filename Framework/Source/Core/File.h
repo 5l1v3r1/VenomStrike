@@ -3,6 +3,7 @@
 #include <string>
 #include <fstream>
 #include <filesystem>
+#include <vector>
 
 namespace VS
 {
@@ -13,10 +14,10 @@ namespace VS
 	};
 
 
-	class VFile
+	class File
 	{
 	public:
-		VFile(const std::string& Filepath, EFileType FileType, bool CreateIfMissing = false);
+		File(const std::string& Filepath, EFileType FileType, bool CreateIfMissing = false);
 		
 		inline static bool Exists(const std::string& Filepath) { return std::filesystem::exists(Filepath); }
 		static std::string ParseFilename(const std::string& Filepath);

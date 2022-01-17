@@ -4,7 +4,7 @@
 
 namespace VS
 {
-	VFile::VFile(const std::string& Filepath, EFileType FileType, bool CreateIfMissing)
+	File::File(const std::string& Filepath, EFileType FileType, bool CreateIfMissing)
 		: Filepath(Filepath), FileType(FileType)
 	{
 		// Create the file if it doesn't exist
@@ -21,7 +21,7 @@ namespace VS
 		Name = ParseFilename(Filepath);
 	}
 
-	std::string VFile::ParseFilename(const std::string& Filepath)
+	std::string File::ParseFilename(const std::string& Filepath)
 	{
 		size_t LastDirectory = Filepath.find_last_of("/");
 
@@ -33,7 +33,7 @@ namespace VS
 		return Filepath; // The file path contains  only the filename
 	}
 
-	std::vector<uint8_t> VFile::Read()
+	std::vector<uint8_t> File::Read()
 	{
 		switch (FileType)
 		{
@@ -44,7 +44,7 @@ namespace VS
 		}
 	}
 
-	size_t VFile::GetFileSize()
+	size_t File::GetFileSize()
 	{
 		switch (FileType)
 		{
@@ -76,7 +76,7 @@ namespace VS
 		}
 		}
 	}
-	std::vector<uint8_t> VFile::ReadBinary()
+	std::vector<uint8_t> File::ReadBinary()
 	{
 		FileStream.open(Filepath, std::ios::in | std::ios::binary);
 
@@ -94,7 +94,7 @@ namespace VS
 
 		return Buffer;
 	}
-	std::vector<uint8_t> VFile::ReadText()
+	std::vector<uint8_t> File::ReadText()
 	{
 		FileStream.open(Filepath, std::ios::in);
 
