@@ -21,12 +21,12 @@ namespace VS
 		inline static bool Exists(const std::string& Filepath) { return std::filesystem::exists(Filepath); }
 		static std::string ParseFilename(const std::string& Filepath);
 		
-		std::vector<char> Read();
+		std::vector<uint8_t> Read();
 		size_t GetFileSize(); // returns the file size in bytes
 
 	private:
-		std::vector<char> ReadBinary();
-		std::vector<char> ReadText();
+		std::vector<uint8_t> ReadBinary();
+		std::vector<uint8_t> ReadText();
 
 	private:
 		std::string Name;

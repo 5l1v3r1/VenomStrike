@@ -7,10 +7,9 @@ namespace VS
 	class VShellcodeParser
 	{
 	public:
-		static std::vector<std::byte> Parse(std::vector<std::byte> RawShellcode);
-		static void ConvertShellcodeToRawBytes(const std::vector<unsigned char>& Input, std::vector<std::byte>& Output);
+		static std::vector<uint8_t> Parse(std::vector<uint8_t> RawShellcode);
 
 	public:
-		static constexpr std::array<std::byte, 2> CallBytes = { static_cast<std::byte>(0xff), static_cast<std::byte>(0xd0) }; // call rax
+		static constexpr std::array<uint8_t, 2> CallBytes = { 0xff, 0xd0 }; // call rax
 	};
 }

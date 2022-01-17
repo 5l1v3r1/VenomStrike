@@ -33,7 +33,7 @@ namespace VS
 		return Filepath; // The file path contains  only the filename
 	}
 
-	std::vector<char> VFile::Read()
+	std::vector<uint8_t> VFile::Read()
 	{
 		switch (FileType)
 		{
@@ -76,7 +76,7 @@ namespace VS
 		}
 		}
 	}
-	std::vector<char> VFile::ReadBinary()
+	std::vector<uint8_t> VFile::ReadBinary()
 	{
 		FileStream.open(Filepath, std::ios::in | std::ios::binary);
 
@@ -87,14 +87,14 @@ namespace VS
 
 		size_t FileSize = GetFileSize();
 
-		std::vector<char> Buffer(FileSize);
+		std::vector<uint8_t> Buffer(FileSize);
 
-		FileStream.read(Buffer.data(), FileSize);
+		FileStream.read(reinterpret_cast<char*>(Buffer.data()), FileSize);
 		FileStream.close();
 
 		return Buffer;
 	}
-	std::vector<char> VFile::ReadText()
+	std::vector<uint8_t> VFile::ReadText()
 	{
 		FileStream.open(Filepath, std::ios::in);
 
@@ -105,9 +105,9 @@ namespace VS
 
 		size_t FileSize = GetFileSize();
 
-		std::vector<char> Buffer(FileSize);
+		std::vector<uint8_t> Buffer(FileSize);
 
-		FileStream.read(Buffer.data(), FileSize);
+		FileStream.read(reinterpret_cast<char*>(Buffer.data()), FileSize);
 		FileStream.close();
 
 		return Buffer;
