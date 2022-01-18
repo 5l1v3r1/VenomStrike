@@ -29,7 +29,7 @@ add_subdirectory(External/zydis)
 # include_directories(External)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
-    ${PROJECT_SOURCE_DIR}/Source
+    ${PROJECT_SOURCE_DIR}/Framework/Source
     ${PROJECT_SOURCE_DIR}/External/zydis/include
     )
  

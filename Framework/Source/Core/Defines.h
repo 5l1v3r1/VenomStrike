@@ -21,5 +21,5 @@ using SDoubleWord = int64_t;
 
 /* Type of addresses.  */
 using Address32 = UWord;
-using Address64 = SWord;
+using Address64 = UDoubleWord;
 
