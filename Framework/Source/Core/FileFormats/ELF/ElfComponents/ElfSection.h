@@ -8,7 +8,7 @@ namespace VS
     enum class EElfSectionType : UWord;
     enum class EElfSectionFlags : UWord;
 
-    // Section Headers
+    //! 32-bit section header
     struct ElfSectionHeader32
     {
         UWord SectionName;             /* Section name (string tbl index) */
@@ -23,6 +23,7 @@ namespace VS
         UWord EntrySize;               /* Entry size if section holds table */
     };
 
+    //! 64-bit section header
     struct ElfSectionHeader64
     {
         UWord SectionName;             /* Section name (string tbl index) */
@@ -39,8 +40,8 @@ namespace VS
 
     // #define VERSIONTAGIDX(tag) (DT_VERNEEDNUM - (tag)) /* Reverse order! */ erudite shit which i am not even going to pretend i understand
     // #define ADDRTAGIDX(tag) (DT_ADDRRNGHI - (tag))     /* Reverse order! */
-    /* Legal values for dynamic entry type (Type).  */
-    template <std::integral Arch> // Arch must be SWord for 32-bit and SDoubleWord for 64-bit
+    //! Legal values for dynamic entry type (Type).  
+    template <std::integral Arch> //! Arch must be SWord for 32-bit and SDoubleWord for 64-bit
     struct EElfDynEntryTypeProxy
     {
         enum class EElfDynEntryType : Arch
@@ -146,28 +147,29 @@ namespace VS
     template<std::integral Arch>
     using EElfDynEntryType = typename EElfDynEntryTypeProxy<Arch>::EElfDynEntryType;
 
-    // Dynamic section entry
+    //! 32-bit dynamic section entry
     struct ElfDynEntry32
     {
-        EElfDynEntryType<SWord> Type; /* Dynamic entry type */
+        EElfDynEntryType<SWord> Type; // Dynamic entry type 
         union
         {
-            UWord Value;       /* Integer value */
-            Address32 Pointer; /* Address value */
+            UWord Value;       // Integer value 
+            Address32 Pointer; // Address value
         } Union;
     };
 
+    //! 64-bit dynamic section entry
     struct ElfDynEntry64
     {
-        EElfDynEntryType<SDoubleWord> Type; /* Dynamic entry type */
+        EElfDynEntryType<SDoubleWord> Type; // Dynamic entry type
         union
         {
-            UDoubleWord Value; /* Integer value */
-            Address64 Pointer; /* Address value */
+            UDoubleWord Value; // Integer value 
+            Address64 Pointer; // Address value 
         } Union;
     };
 
-    /* Legal values for Section Type (section type).  */
+    //! Legal values for Section Type
     enum class EElfSectionType : UWord
     {
         _NULL = 0,                   /* Section header table entry unused */
@@ -208,7 +210,7 @@ namespace VS
         HIUSER = 0x8fffffff       /* End of application-specific */
     };
 
-    // Section flags
+    //! Section flags
     enum class EElfSectionFlags : UWord
     {
         WRITE = (1 << 0),            /* Writable */
