@@ -23,3 +23,13 @@ using SDoubleWord = int64_t;
 using Address32 = UWord;
 using Address64 = UDoubleWord;
 
+// Functions for type information
+namespace VS
+{
+template <class T>
+std::underlying_type<T> ToUnderlyingType(T v)
+{
+    return static_cast<std::underlying_type<T>>(v);
+}
+
+}
