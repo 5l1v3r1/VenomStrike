@@ -4,33 +4,33 @@
 
 namespace VS
 {
-	File::File(const std::string& Filepath, EFileType FileType, bool CreateIfMissing)
-		: Filepath(Filepath), FileType(FileType)
+	File::File(const std::string& FilePath, EFileType FileType, bool CreateIfMissing)
+		: FilePath(FilePath), FileType(FileType)
 	{
 		// Create the file if it doesn't exist
-		if (CreateIfMissing && !Exists(Filepath))
+		if (CreateIfMissing && !Exists(FilePath))
 		{
-			FileStream.open(Filepath);
+			FileStream.open(FilePath);
 			if (!FileStream.is_open())
 			{
-				throw std::runtime_error("Failed to create file: " + Filepath);
+				throw std::runtime_error("Failed to create file: " + FilePath);
 			}
 			FileStream.close();
 		}
 
-		Name = ParseFilename(Filepath);
+		Name = ParseFilename(FilePath);
 	}
 
-	std::string File::ParseFilename(const std::string& Filepath)
+	std::string File::ParseFilename(const std::string& FilePath)
 	{
-		size_t LastDirectory = Filepath.find_last_of("/");
+		size_t LastDirectory = FilePath.find_last_of("/");
 
 		if (LastDirectory != std::string::npos)
 		{
-			return Filepath.substr(LastDirectory + 1, Filepath.length() - LastDirectory);
+			return FilePath.substr(LastDirectory + 1, FilePath.length() - LastDirectory);
 		}
 
-		return Filepath; // The file path contains  only the filename
+		return FilePath; // The file path contains  only the filename
 	}
 
 	std::vector<uint8_t> File::Read()
@@ -50,10 +50,10 @@ namespace VS
 		{
 		case EFileType::Text:
 		{
-			FileStream.open(Filepath, std::ios::ate | std::ios::in);
+			FileStream.open(FilePath, std::ios::ate | std::ios::in);
 			if (!FileStream.is_open())
 			{
-				throw std::runtime_error("Failed to open file: " + Filepath);
+				throw std::runtime_error("Failed to open file: " + FilePath);
 			}
 
 			size_t FileSize = FileStream.tellg();
@@ -63,10 +63,10 @@ namespace VS
 		}
 		case EFileType::Binary:
 		{
-			FileStream.open(Filepath, std::ios::ate | std::ios::in | std::ios::binary);
+			FileStream.open(FilePath, std::ios::ate | std::ios::in | std::ios::binary);
 			if (!FileStream.is_open())
 			{
-				throw std::runtime_error("Failed to open file: " + Filepath);
+				throw std::runtime_error("Failed to open file: " + FilePath);
 			}
 
 			size_t FileSize = FileStream.tellg();
@@ -78,11 +78,11 @@ namespace VS
 	}
 	std::vector<uint8_t> File::ReadBinary()
 	{
-		FileStream.open(Filepath, std::ios::in | std::ios::binary);
+		FileStream.open(FilePath, std::ios::in | std::ios::binary);
 
 		if (!FileStream.is_open())
 		{
-			throw std::runtime_error("Failed to open file for reading: " + Filepath);
+			throw std::runtime_error("Failed to open file for reading: " + FilePath);
 		}
 
 		size_t FileSize = GetFileSize();
@@ -96,11 +96,11 @@ namespace VS
 	}
 	std::vector<uint8_t> File::ReadText()
 	{
-		FileStream.open(Filepath, std::ios::in);
+		FileStream.open(FilePath, std::ios::in);
 
 		if (!FileStream.is_open())
 		{
-			throw std::runtime_error("Failed to open file for reading: " + Filepath);
+			throw std::runtime_error("Failed to open file for reading: " + FilePath);
 		}
 
 		size_t FileSize = GetFileSize();

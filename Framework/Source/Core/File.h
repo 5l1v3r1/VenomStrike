@@ -19,19 +19,20 @@ namespace VS
 	public:
 		File(const std::string& Filepath, EFileType FileType, bool CreateIfMissing = false);
 		
-		inline static bool Exists(const std::string& Filepath) { return std::filesystem::exists(Filepath); }
-		static std::string ParseFilename(const std::string& Filepath);
+		inline static bool Exists(const std::string& FilePath) { return std::filesystem::exists(FilePath); }
+		static std::string ParseFilename(const std::string& FilePath);
 		
 		std::vector<uint8_t> Read();
 		size_t GetFileSize(); // returns the file size in bytes
 
+		virtual const std::string& GetFilePath() const { return FilePath; }
 	private:
 		std::vector<uint8_t> ReadBinary();
 		std::vector<uint8_t> ReadText();
 
 	private:
 		std::string Name;
-		std::string Filepath;
+		std::string FilePath;
 
 		EFileType FileType;
 
