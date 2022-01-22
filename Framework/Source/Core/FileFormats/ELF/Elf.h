@@ -5,6 +5,6 @@
 #include "ElfComponents/ElfSection.h"
 #include "ElfComponents/ElfSymbol.h"
 
-#include <elf.h>
+//#include <elf.h>
 
 

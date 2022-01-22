@@ -2,6 +2,19 @@
 
 #include <Core/FileFormats/ELF/ElfDefines.h>
 
+/* Fields in the ElfIdentifier array.  The EI_* macros are indices into the
+   array.  The macros under each EI_* macro are the values the byte
+   may have.  */
+
+#define EI_MAG0		0		/* File identification byte 0 index */
+#define EI_MAG1		1		/* File identification byte 1 index */
+#define EI_MAG2		2		/* File identification byte 2 index */
+#define EI_MAG3		3		/* File identification byte 3 index */
+#define EI_CLASS	4		/* File class byte index */
+
+#define EI_DATA		5		/* Data encoding byte index */
+#define EI_VERSION	6		/* File version byte index */
+					/* Value must be EV_CURRENT */
 #define EI_NIDENT (16)
 
 namespace VS

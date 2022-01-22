@@ -1,11 +1,11 @@
 #include "Application.h"
 
 #include <vector>
+#include <iostream>
 
 #include "Injectors/ShellcodeParser.h"
 #include "Disassembler/Disassembler.h"
-
-#include <iostream>
+#include "Core/FileFormats/ELF/ElfFile.h"
 
 namespace VS
 {
@@ -20,7 +20,9 @@ namespace VS
 		VDisassembler Disassembler;
 		std::vector<size_t> CallInstructions = Disassembler.FindInstruction(Shellcode, ZYDIS_MNEMONIC_CALL);
 		
-
+		ElfFilePrototype ElfFileProto("Test.elf");
+		auto ElfFile = ParseElf(ElfFileProto);
+		int a = 0;
 	}
 }
 

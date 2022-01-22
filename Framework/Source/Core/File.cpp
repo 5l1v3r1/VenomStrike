@@ -33,7 +33,7 @@ namespace VS
 		return FilePath; // The file path contains  only the filename
 	}
 
-	std::vector<uint8_t> File::Read()
+	std::vector<UByte> File::Read()
 	{
 		switch (FileType)
 		{
@@ -41,6 +41,17 @@ namespace VS
 			return ReadBinary();
 		case EFileType::Text:
 			return ReadText();
+		}
+	}
+
+	std::vector<UByte> File::Read(size_t Bytes)
+	{
+		switch (FileType)
+		{
+		case EFileType::Binary:
+			return ReadBinary(Bytes);
+		case EFileType::Text:
+			return ReadText(Bytes);
 		}
 	}
 
@@ -76,25 +87,15 @@ namespace VS
 		}
 		}
 	}
-	std::vector<uint8_t> File::ReadBinary()
+
+	std::vector<UByte> File::ReadBinary()
 	{
-		FileStream.open(FilePath, std::ios::in | std::ios::binary);
-
-		if (!FileStream.is_open())
-		{
-			throw std::runtime_error("Failed to open file for reading: " + FilePath);
-		}
-
 		size_t FileSize = GetFileSize();
 
-		std::vector<uint8_t> Buffer(FileSize);
-
-		FileStream.read(reinterpret_cast<char*>(Buffer.data()), FileSize);
-		FileStream.close();
-
-		return Buffer;
+		return ReadBinary(FileSize);
 	}
-	std::vector<uint8_t> File::ReadText()
+
+	std::vector<UByte> File::ReadText()
 	{
 		FileStream.open(FilePath, std::ios::in);
 
@@ -105,9 +106,42 @@ namespace VS
 
 		size_t FileSize = GetFileSize();
 
-		std::vector<uint8_t> Buffer(FileSize);
+		return ReadText(FileSize);
+	}
 
-		FileStream.read(reinterpret_cast<char*>(Buffer.data()), FileSize);
+	std::vector<UByte> File::ReadBinary(size_t Bytes)
+	{
+		FileStream.open(FilePath, std::ios::in | std::ios::binary);
+
+		if (!FileStream.is_open())
+		{
+			throw std::runtime_error("Failed to open file for reading: " + FilePath);
+		}
+
+		size_t FileSize = GetFileSize();
+
+		std::vector<UByte> Buffer(FileSize);
+
+		FileStream.read(reinterpret_cast<char*>(Buffer.data()), Bytes);
+		FileStream.close();
+
+		return Buffer;
+	}
+
+	std::vector<UByte> File::ReadText(size_t Bytes)
+	{
+		FileStream.open(FilePath, std::ios::in);
+
+		if (!FileStream.is_open())
+		{
+			throw std::runtime_error("Failed to open file for reading: " + FilePath);
+		}
+
+		size_t FileSize = GetFileSize();
+
+		std::vector<UByte> Buffer(FileSize);
+
+		FileStream.read(reinterpret_cast<char*>(Buffer.data()), Bytes);
 		FileStream.close();
 
 		return Buffer;
