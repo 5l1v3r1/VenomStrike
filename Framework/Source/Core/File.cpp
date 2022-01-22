@@ -55,6 +55,17 @@ namespace VS
 		}
 	}
 
+	std::vector<UByte> File::Read(size_t From, size_t Bytes)
+	{
+		switch (FileType)
+		{
+		case EFileType::Binary:
+			return ReadBinary(From, Bytes);
+		case EFileType::Text:
+			return ReadText(From, Bytes);
+		}
+	}
+
 	size_t File::GetFileSize()
 	{
 		switch (FileType)
@@ -91,46 +102,45 @@ namespace VS
 	std::vector<UByte> File::ReadBinary()
 	{
 		size_t FileSize = GetFileSize();
-
 		return ReadBinary(FileSize);
 	}
 
 	std::vector<UByte> File::ReadText()
 	{
-		FileStream.open(FilePath, std::ios::in);
-
-		if (!FileStream.is_open())
-		{
-			throw std::runtime_error("Failed to open file for reading: " + FilePath);
-		}
-
 		size_t FileSize = GetFileSize();
-
 		return ReadText(FileSize);
 	}
 
 	std::vector<UByte> File::ReadBinary(size_t Bytes)
 	{
+		return ReadBinary(0, Bytes);
+	}
+
+	std::vector<UByte> File::ReadText(size_t Bytes)
+	{
+		return ReadText(0, Bytes);
+	}
+	std::vector<UByte> File::ReadBinary(size_t From, size_t Bytes)
+	{
 		FileStream.open(FilePath, std::ios::in | std::ios::binary);
+		FileStream.seekg(From);
 
 		if (!FileStream.is_open())
 		{
 			throw std::runtime_error("Failed to open file for reading: " + FilePath);
 		}
 
-		size_t FileSize = GetFileSize();
-
-		std::vector<UByte> Buffer(FileSize);
+		std::vector<UByte> Buffer(Bytes);
 
 		FileStream.read(reinterpret_cast<char*>(Buffer.data()), Bytes);
 		FileStream.close();
 
 		return Buffer;
 	}
-
-	std::vector<UByte> File::ReadText(size_t Bytes)
+	std::vector<UByte> File::ReadText(size_t From, size_t Bytes)
 	{
 		FileStream.open(FilePath, std::ios::in);
+		FileStream.seekg(From);
 
 		if (!FileStream.is_open())
 		{
@@ -139,7 +149,7 @@ namespace VS
 
 		size_t FileSize = GetFileSize();
 
-		std::vector<UByte> Buffer(FileSize);
+		std::vector<UByte> Buffer(Bytes);
 
 		FileStream.read(reinterpret_cast<char*>(Buffer.data()), Bytes);
 		FileStream.close();

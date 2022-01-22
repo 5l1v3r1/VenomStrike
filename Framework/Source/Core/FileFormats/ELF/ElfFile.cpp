@@ -8,7 +8,7 @@ namespace VS
     ElfFilePrototype::ElfFilePrototype(const std::string& Filepath)
         : File(Filepath, EFileType::Binary, false)
     {
-        UByte HeaderBeginning = std::vector<UByte>(Read().begin() + 4, Read().begin() + 5)[0];
+        UByte HeaderBeginning = std::vector<UByte>(Read(4, 2))[0];
 
         // 32-bit
         if(HeaderBeginning == 1)

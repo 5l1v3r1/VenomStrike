@@ -27,6 +27,9 @@ namespace VS
 		std::vector<UByte> Read();
 		//! Read a certain amount of bytes from the beginning of the file
 		std::vector<UByte> Read(size_t Bytes);
+
+		//! Read a certain amount of bytes from a specific byte in the file
+		std::vector<UByte> Read(size_t From, size_t Bytes);
 		size_t GetFileSize(); // returns the file size in bytes
 
 		virtual const std::string& GetFilePath() const { return FilePath; }
@@ -35,6 +38,8 @@ namespace VS
 		std::vector<UByte> ReadText();
 		std::vector<UByte> ReadBinary(size_t Bytes);
 		std::vector<UByte> ReadText(size_t Bytes);
+		std::vector<UByte> ReadBinary(size_t From, size_t Bytes);
+		std::vector<UByte> ReadText(size_t From, size_t Bytes);
 
 	private:
 		std::string Name;
