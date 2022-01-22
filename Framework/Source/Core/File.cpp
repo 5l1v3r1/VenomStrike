@@ -66,6 +66,17 @@ namespace VS
 		}
 	}
 
+	Offset64 File::Find(size_t From, const std::vector<UByte>& Pattern)
+	{
+		switch (FileType)
+		{
+		case EFileType::Binary:
+			return FindBinary(From, Pattern);
+		case EFileType::Text:
+			return FindText(From, Pattern);
+		}
+	}
+
 	size_t File::GetFileSize()
 	{
 		switch (FileType)
@@ -99,31 +110,12 @@ namespace VS
 		}
 	}
 
-	std::vector<UByte> File::ReadBinary()
-	{
-		size_t FileSize = GetFileSize();
-		return ReadBinary(FileSize);
-	}
-
-	std::vector<UByte> File::ReadText()
-	{
-		size_t FileSize = GetFileSize();
-		return ReadText(FileSize);
-	}
-
-	std::vector<UByte> File::ReadBinary(size_t Bytes)
-	{
-		return ReadBinary(0, Bytes);
-	}
-
-	std::vector<UByte> File::ReadText(size_t Bytes)
-	{
-		return ReadText(0, Bytes);
-	}
 	std::vector<UByte> File::ReadBinary(size_t From, size_t Bytes)
 	{
 		FileStream.open(FilePath, std::ios::in | std::ios::binary);
-		FileStream.seekg(From);
+
+		FileStream.clear();
+		FileStream.seekg(From, std::ios::beg);
 
 		if (!FileStream.is_open())
 		{
@@ -135,11 +127,14 @@ namespace VS
 		FileStream.read(reinterpret_cast<char*>(Buffer.data()), Bytes);
 		FileStream.close();
 
+		Buffer.resize(Bytes);
 		return Buffer;
 	}
+
 	std::vector<UByte> File::ReadText(size_t From, size_t Bytes)
 	{
 		FileStream.open(FilePath, std::ios::in);
+		FileStream.clear();
 		FileStream.seekg(From);
 
 		if (!FileStream.is_open())
@@ -149,11 +144,40 @@ namespace VS
 
 		size_t FileSize = GetFileSize();
 
-		std::vector<UByte> Buffer(Bytes);
+		std::vector<UByte> Buffer;
 
 		FileStream.read(reinterpret_cast<char*>(Buffer.data()), Bytes);
 		FileStream.close();
+		Buffer.resize(Bytes);
 
 		return Buffer;
+	}
+
+	Offset64 File::FindBinary(size_t From, const std::vector<UByte>& Pattern)
+	{
+		for (size_t i = 0; true; ++i)
+		{
+			std::vector<UByte> Data = Read(From + i, Pattern.size());
+			if (Data == Pattern)
+			{
+				return From + i;
+			}
+		}
+
+		return 0;
+	}
+
+	Offset64 File::FindText(size_t From, const std::vector<UByte>& Pattern)
+	{
+		for (size_t i = 0; true; ++i)
+		{
+			if (Read(From + i, Pattern.size()) == Pattern)
+			{
+				return From + i;
+			}
+		}
+
+		FileStream.close();
+		return 0;
 	}
 }

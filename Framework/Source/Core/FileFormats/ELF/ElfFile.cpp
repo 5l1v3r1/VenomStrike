@@ -49,6 +49,7 @@ namespace VS
 
         ProgramHeaders.reserve(ElfHeader.ProgramHeaderCount);
         SectionHeaders.reserve(ElfHeader.SectionHeaderCount);
+        SectionNames.reserve(ElfHeader.SectionHeaderCount);
 
         // Load program headers
         for (size_t i = 0; i < ElfHeader.ProgramHeaderCount; ++i)
@@ -95,20 +96,36 @@ namespace VS
 
         ProgramHeaders.reserve(ElfHeader.ProgramHeaderCount);
         SectionHeaders.reserve(ElfHeader.SectionHeaderCount);
+        SectionNames.reserve(ElfHeader.SectionHeaderCount);
 
         // Load program headers
         for (size_t i = 0; i < ElfHeader.ProgramHeaderCount; ++i)
         {
             std::vector<UByte> ProgramHeaderData = Read(ElfHeader.ProgramHeaderTableOffset + ElfHeader.ProgramHeaderSize * i, ElfHeader.ProgramHeaderSize);
-            ProgramHeaders.push_back(*reinterpret_cast<ElfProgramHeader64*>(ProgramHeaderData.data()));
+            ProgramHeaders.emplace_back(*reinterpret_cast<ElfProgramHeader64*>(ProgramHeaderData.data()));
         }
 
         // Load section headers
         for (size_t i = 0; i < ElfHeader.SectionHeaderCount; ++i)
         {
             std::vector<UByte> SectionHeaderData = Read(ElfHeader.SectionHeaderTableOffset + ElfHeader.SectionHeaderSize * i, ElfHeader.SectionHeaderSize);
-            SectionHeaders.push_back(*reinterpret_cast<ElfSectionHeader64*>(SectionHeaderData.data()));
+            SectionHeaders.emplace_back(*reinterpret_cast<ElfSectionHeader64*>(SectionHeaderData.data()));
         }
+
+        // Load section string table
+        Offset64 StringTableStart = SectionHeaders[ElfHeader.StringTableIndex].SectionOffset;
+        Offset64 StringTableEnd = Find(SectionHeaders[ElfHeader.StringTableIndex].SectionOffset + 1, { 0x0, 0x0 });
+        
+        for (Offset64 Offset = 1; StringTableStart + Offset < StringTableEnd;)
+        {
+            Offset64 StringStart = SectionHeaders[ElfHeader.StringTableIndex].SectionOffset + Offset;
+            Address64 StringEnd = Find(StringStart, { 0x0 });
+            std::vector<UByte> SectionNameBytes = Read(StringStart, StringEnd - StringStart);
+
+            SectionNames.emplace_back(SectionNameBytes.begin(), SectionNameBytes.end());
+            Offset += StringEnd - StringStart + 1;
+        }
+
     }
 
     bool ElfFile64::CheckElf()

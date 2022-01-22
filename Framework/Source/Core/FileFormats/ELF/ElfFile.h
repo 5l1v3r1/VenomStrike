@@ -41,6 +41,7 @@ namespace VS
 
         std::vector<ElfProgramHeader32> ProgramHeaders;
         std::vector<ElfSectionHeader32> SectionHeaders;
+        std::vector<std::string> SectionNames;
     };
 
     class ElfFile64 : public ElfFilePrototype
@@ -57,5 +58,6 @@ namespace VS
 
         std::vector<ElfProgramHeader64> ProgramHeaders;
         std::vector<ElfSectionHeader64> SectionHeaders;
+        std::vector<std::string> SectionNames;
     };
 }
