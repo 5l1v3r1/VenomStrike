@@ -40,6 +40,12 @@ namespace VS
     {
         std::vector<UByte> ElfHeaderBytes = Read(sizeof(ElfHeader32));
         std::memcpy(&ElfHeader, ElfHeaderBytes.data(), sizeof(ElfHeader32));
+        
+    }
+
+    Address32 ElfFile32::FindMainFunction()
+    {
+        return Address32();
     }
 
     // 64-bit 
