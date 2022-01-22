@@ -34,7 +34,7 @@ namespace VS
         UWord Size;                 /* Symbol size */
         UByte Info;                 /* Symbol type and binding */
         EElfSymbolVisibility Other; /* Symbol visibility */
-        ElfSection32 SectionIndex;  /* Section index */
+        ElfSectionIndex32 SectionIndex;  /* Section index */
     };
 
     struct ElfSymbol64
@@ -42,7 +42,7 @@ namespace VS
         UWord Name;                 /* Symbol name (string tbl index) */
         UByte Info;                 /* Symbol type and binding */
         EElfSymbolVisibility Other; /* Symbol visibility */
-        ElfSection64 SectionIndex;  /* Section index */
+        ElfSectionIndex64 SectionIndex;  /* Section index */
         Address64 Value;            /* Symbol value */
         UDoubleWord Size;           /* Symbol size */
     };

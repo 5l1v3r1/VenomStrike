@@ -1,7 +1,9 @@
 #pragma once
+#include <vector>
+
 #include <Zydis/Decoder.h>
 
-#include <vector>
+#include <Core/Defines.h>
 
 namespace VS
 {
@@ -9,7 +11,7 @@ namespace VS
 	{
 	public:
 		VDisassembler();
-		std::vector<size_t> FindInstruction(const std::vector<uint8_t>& MachineCode, ZydisMnemonic Instruction);
+		std::vector<Offset64> FindInstruction(const std::vector<UByte>& MachineCode, ZydisMnemonic Instruction);
 
 	private:
 		ZydisDecoder Decoder;

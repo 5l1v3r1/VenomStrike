@@ -33,10 +33,14 @@ namespace VS
         ElfFile32(const std::string& Filepath);
         const ElfHeader32& GetElfHeader() const { return ElfHeader; }
     private:
+        bool CheckElf(); // Returns true if we really have an ELF binary.
         Address32 FindMainFunction();
 
     private:
         ElfHeader32 ElfHeader;
+
+        std::vector<ElfProgramHeader32> ProgramHeaders;
+        std::vector<ElfSectionHeader32> SectionHeaders;
     };
 
     class ElfFile64 : public ElfFilePrototype
@@ -46,8 +50,12 @@ namespace VS
         const ElfHeader64& GetElfHeader() const { return ElfHeader; }
 
     private:
+        bool CheckElf(); // Returns true if we really have an ELF binary.
         Address64 FindMainFunction();
     private:
         ElfHeader64 ElfHeader;
+
+        std::vector<ElfProgramHeader64> ProgramHeaders;
+        std::vector<ElfSectionHeader64> SectionHeaders;
     };
 }

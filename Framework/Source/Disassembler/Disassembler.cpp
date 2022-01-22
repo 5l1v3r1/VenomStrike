@@ -14,10 +14,10 @@ namespace VS
 	}
 
     // Returns all instances of an instruction given its mnemonic
-    std::vector<size_t> VDisassembler::FindInstruction(const std::vector<uint8_t>& MachineCode, ZydisMnemonic Instruction)
+    std::vector<size_t> VDisassembler::FindInstruction(const std::vector<UByte>& MachineCode, ZydisMnemonic Instruction)
     {
         ZydisDecodedInstruction DecodedInstruction;
-        std::vector<size_t> Offsets;
+        std::vector<Offset64> Offsets;
         size_t MachineCodeSize = MachineCode.size();
 
         for (size_t i = 0; ZYAN_SUCCESS(ZydisDecoderDecodeBuffer(&Decoder, MachineCode.data() + i, MachineCodeSize - i, &DecodedInstruction)); i += DecodedInstruction.length)

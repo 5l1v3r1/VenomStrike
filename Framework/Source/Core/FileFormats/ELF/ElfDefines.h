@@ -7,8 +7,8 @@ using ElfOffset32 = UWord;
 using ElfOffset64 = UDoubleWord;
 
 /* Type for section indices, which are 16-bit quantities.  */
-using ElfSection32 = UHalfWord;
-using ElfSection64 = UHalfWord;
+using ElfSectionIndex32 = UHalfWord;
+using ElfSectionIndex64 = UHalfWord;
 
 /* Type for version symbol information.  */
 using ElfVersym32 = UHalfWord;

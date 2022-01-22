@@ -10,20 +10,20 @@ namespace VS
     /* Program segment header.  */
     struct ElfProgramHeader32
     {
-        UWord SegmentType;                /* Segment type */
+        EElfSegmentType SegmentType;      /* Segment type */
         ElfOffset32 SegmentOffset;        /* Segment file offset */
         Address32 SegmentVirtualAddress;  /* Segment virtual address */
         Address32 SegmentPhysicalAddress; /* Segment physical address */
         UWord SegmentFileSize;            /* Segment size in file */
         UWord SegmentMemorySize;          /* Segment size in memory */
-        UWord SegmentFlags;               /* Segment flags */
+        EElfSegmentFlags SegmentFlags;               /* Segment flags */
         UWord SegmentAlignment;           /* Segment alignment */
     };
 
     struct ElfProgramHeader64
     {
-        UWord SegmentType;                /* Segment type */
-        UWord SegmentFlags;               /* Segment flags */
+        EElfSegmentType SegmentType;      /* Segment type */
+        EElfSegmentFlags SegmentFlags;               /* Segment flags */
         ElfOffset64 SegmentOffset;        /* Segment file offset */
         Address64 SegmentVirtualAddress;  /* Segment virtual address */
         Address64 SegmentPhysicalAddress; /* Segment physical address */
@@ -58,7 +58,7 @@ namespace VS
         HIPROC = 0x7fffffff, /* End of processor-specific */
     };
 
-    /* Legal values for p_flags (segment flags).  */
+    /* Legal values for segment flags.  */
     enum class EElfSegmentFlags : UWord
     {
         X = (1 << 0),          /* Segment is executable */
@@ -67,4 +67,9 @@ namespace VS
         MASKOS = 0x0ff00000,   /* OS-specific */
         MASKPROC = 0xf0000000, /* Processor-specific */
     };
+
+    inline EElfSegmentFlags operator|(EElfSegmentFlags a, EElfSegmentFlags b)
+    {
+        return static_cast<EElfSegmentFlags>(static_cast<UWord>(a) | static_cast<UWord>(b));
+    }
 }

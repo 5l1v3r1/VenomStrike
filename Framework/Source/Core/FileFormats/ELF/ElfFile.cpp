@@ -41,6 +41,38 @@ namespace VS
         std::vector<UByte> ElfHeaderBytes = Read(sizeof(ElfHeader32));
         std::memcpy(&ElfHeader, ElfHeaderBytes.data(), sizeof(ElfHeader32));
         
+        if (!CheckElf())
+        {
+            // Error handling
+            return;
+        }
+
+        ProgramHeaders.reserve(ElfHeader.ProgramHeaderCount);
+        SectionHeaders.reserve(ElfHeader.SectionHeaderCount);
+
+        // Load program headers
+        for (size_t i = 0; i < ElfHeader.ProgramHeaderCount; ++i)
+        {
+            std::vector<UByte> ProgramHeaderData = Read(ElfHeader.ProgramHeaderTableOffset + ElfHeader.ProgramHeaderSize * i, ElfHeader.ProgramHeaderSize);
+            ProgramHeaders.push_back(*reinterpret_cast<ElfProgramHeader32*>(ProgramHeaderData.data()));
+        }
+
+        // Load section headers
+        for (size_t i = 0; i < ElfHeader.SectionHeaderCount; ++i)
+        {
+            std::vector<UByte> SectionHeaderData = Read(ElfHeader.SectionHeaderTableOffset + ElfHeader.SectionHeaderSize * i, ElfHeader.SectionHeaderSize);
+            SectionHeaders.push_back(*reinterpret_cast<ElfSectionHeader32*>(SectionHeaderData.data()));
+        }
+    }
+
+    bool ElfFile32::CheckElf()
+    {
+        for (uint8_t i = 0; i < 4; ++i)
+        {
+            if (ElfHeader.ElfIdentifier[i] != ElfMagic[i])
+                return false;
+        }
+        return true;
     }
 
     Address32 ElfFile32::FindMainFunction()
@@ -52,7 +84,44 @@ namespace VS
     ElfFile64::ElfFile64(const std::string& FilePath)
         : ElfFilePrototype(FilePath)
     {
-        std::vector<uint8_t> ElfHeaderBytes = Read(sizeof(ElfHeader64));
+        std::vector<UByte> ElfHeaderBytes = Read(sizeof(ElfHeader64));
         std::memcpy(&ElfHeader, ElfHeaderBytes.data(), sizeof(ElfHeader64));
+
+        if (!CheckElf())
+        {
+            // Error handling
+            return;
+        }
+
+        ProgramHeaders.reserve(ElfHeader.ProgramHeaderCount);
+        SectionHeaders.reserve(ElfHeader.SectionHeaderCount);
+
+        // Load program headers
+        for (size_t i = 0; i < ElfHeader.ProgramHeaderCount; ++i)
+        {
+            std::vector<UByte> ProgramHeaderData = Read(ElfHeader.ProgramHeaderTableOffset + ElfHeader.ProgramHeaderSize * i, ElfHeader.ProgramHeaderSize);
+            ProgramHeaders.push_back(*reinterpret_cast<ElfProgramHeader64*>(ProgramHeaderData.data()));
+        }
+
+        // Load section headers
+        for (size_t i = 0; i < ElfHeader.SectionHeaderCount; ++i)
+        {
+            std::vector<UByte> SectionHeaderData = Read(ElfHeader.SectionHeaderTableOffset + ElfHeader.SectionHeaderSize * i, ElfHeader.SectionHeaderSize);
+            SectionHeaders.push_back(*reinterpret_cast<ElfSectionHeader64*>(SectionHeaderData.data()));
+        }
+    }
+
+    bool ElfFile64::CheckElf()
+    {
+        for (uint8_t i = 0; i < 4; ++i)
+        {
+            if (ElfHeader.ElfIdentifier[i] != ElfMagic[i])
+                return false;
+        }
+        return true;
+    }
+    Address64 ElfFile64::FindMainFunction()
+    {
+        return Address64();
     }
 }

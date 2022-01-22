@@ -19,9 +19,13 @@ using SWord = int32_t;
 using UDoubleWord = uint64_t;
 using SDoubleWord = int64_t;
 
-/* Type of addresses.  */
+/* Types of addresses.  */
 using Address32 = UWord;
 using Address64 = UDoubleWord;
+
+// Types of offsets;
+using Offset32 = UWord;
+using Offset64 = UDoubleWord;
 
 // Functions for type information
 namespace VS

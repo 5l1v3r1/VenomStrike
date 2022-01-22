@@ -23,6 +23,8 @@ namespace VS
     enum class EElfArch : UHalfWord;
     enum class EElfVersion : UWord;
 
+    static constexpr std::array<UByte, 4> ElfMagic = { 0x7f, 0x45, 0x4c, 0x46 }; // Elf magic bytes
+
     // Elf Headers
     struct ElfHeader32
     {
