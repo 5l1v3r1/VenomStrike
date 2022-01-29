@@ -1,5 +1,6 @@
 #pragma once
 #include <variant>
+#include <unordered_map>
 
 #include <Core/File.h>
 #include "Elf.h"
@@ -35,13 +36,16 @@ namespace VS
     private:
         bool CheckElf(); // Returns true if we really have an ELF binary.
         Address32 FindMainFunction();
+        void LoadSections();
 
     private:
         ElfHeader32 ElfHeader;
 
         std::vector<ElfProgramHeader32> ProgramHeaders;
-        std::vector<ElfSectionHeader32> SectionHeaders;
-        std::vector<std::string> SectionNames;
+        std::unordered_map<std::string, ElfSectionHeader32> Sections;
+
+
+        Address32 MainFunction;
     };
 
     class ElfFile64 : public ElfFilePrototype
@@ -53,11 +57,14 @@ namespace VS
     private:
         bool CheckElf(); // Returns true if we really have an ELF binary.
         Address64 FindMainFunction();
+        void LoadSections();
+
     private:
         ElfHeader64 ElfHeader;
 
         std::vector<ElfProgramHeader64> ProgramHeaders;
-        std::vector<ElfSectionHeader64> SectionHeaders;
-        std::vector<std::string> SectionNames;
+        std::unordered_map<std::string, ElfSectionHeader64> Sections;
+
+        Address64 MainFunction;
     };
 }

@@ -48,8 +48,6 @@ namespace VS
         }
 
         ProgramHeaders.reserve(ElfHeader.ProgramHeaderCount);
-        SectionHeaders.reserve(ElfHeader.SectionHeaderCount);
-        SectionNames.reserve(ElfHeader.SectionHeaderCount);
 
         // Load program headers
         for (size_t i = 0; i < ElfHeader.ProgramHeaderCount; ++i)
@@ -58,12 +56,7 @@ namespace VS
             ProgramHeaders.push_back(*reinterpret_cast<ElfProgramHeader32*>(ProgramHeaderData.data()));
         }
 
-        // Load section headers
-        for (size_t i = 0; i < ElfHeader.SectionHeaderCount; ++i)
-        {
-            std::vector<UByte> SectionHeaderData = Read(ElfHeader.SectionHeaderTableOffset + ElfHeader.SectionHeaderSize * i, ElfHeader.SectionHeaderSize);
-            SectionHeaders.push_back(*reinterpret_cast<ElfSectionHeader32*>(SectionHeaderData.data()));
-        }
+        LoadSections();
     }
 
     bool ElfFile32::CheckElf()
@@ -81,6 +74,46 @@ namespace VS
         return Address32();
     }
 
+    void ElfFile32::LoadSections()
+    {
+        std::vector<ElfSectionHeader32> SectionHeaders;
+        std::vector<std::string> SectionNames;
+
+        SectionHeaders.reserve(ElfHeader.SectionHeaderCount);
+        SectionNames.reserve(ElfHeader.SectionHeaderCount);
+        Sections.reserve(ElfHeader.SectionHeaderCount);
+
+        // Load section headers
+        for (size_t i = 0; i < ElfHeader.SectionHeaderCount; ++i)
+        {
+            std::vector<UByte> SectionHeaderData = Read(ElfHeader.SectionHeaderTableOffset + ElfHeader.SectionHeaderSize * i, ElfHeader.SectionHeaderSize);
+            SectionHeaders.push_back(*reinterpret_cast<ElfSectionHeader32*>(SectionHeaderData.data()));
+        }
+
+        // Load section string table
+        Offset32 StringTableStart = SectionHeaders[ElfHeader.StringTableIndex].SectionOffset;
+        Offset32 StringTableEnd = Find(SectionHeaders[ElfHeader.StringTableIndex].SectionOffset + 1, { 0x0, 0x0 });
+
+        for (Offset32 Offset = 1; StringTableStart + Offset < StringTableEnd;)
+        {
+            Offset32 StringStart = SectionHeaders[ElfHeader.StringTableIndex].SectionOffset + Offset;
+            Address32 StringEnd = Find(StringStart, { 0x0 });
+            std::vector<UByte> SectionNameBytes = Read(StringStart, StringEnd - StringStart);
+
+            SectionNames.emplace_back(SectionNameBytes.begin(), SectionNameBytes.end());
+            Offset += StringEnd - StringStart + 1;
+        }
+
+        std::unordered_map<UWord, UWord> StringTableIndices;
+        StringTableIndices.reserve(ElfHeader.SectionHeaderCount);
+
+        // Combine section headers with names into a map for easier access
+        for (size_t i = 0; i < ElfHeader.SectionHeaderCount; ++i)
+        {
+            Sections.insert_or_assign(SectionNames[StringTableIndices[SectionHeaders[i].SectionName]], SectionHeaders[i]);
+        }
+    }
+
     // 64-bit 
     ElfFile64::ElfFile64(const std::string& FilePath)
         : ElfFilePrototype(FilePath)
@@ -95,8 +128,6 @@ namespace VS
         }
 
         ProgramHeaders.reserve(ElfHeader.ProgramHeaderCount);
-        SectionHeaders.reserve(ElfHeader.SectionHeaderCount);
-        SectionNames.reserve(ElfHeader.SectionHeaderCount);
 
         // Load program headers
         for (size_t i = 0; i < ElfHeader.ProgramHeaderCount; ++i)
@@ -105,27 +136,9 @@ namespace VS
             ProgramHeaders.emplace_back(*reinterpret_cast<ElfProgramHeader64*>(ProgramHeaderData.data()));
         }
 
-        // Load section headers
-        for (size_t i = 0; i < ElfHeader.SectionHeaderCount; ++i)
-        {
-            std::vector<UByte> SectionHeaderData = Read(ElfHeader.SectionHeaderTableOffset + ElfHeader.SectionHeaderSize * i, ElfHeader.SectionHeaderSize);
-            SectionHeaders.emplace_back(*reinterpret_cast<ElfSectionHeader64*>(SectionHeaderData.data()));
-        }
+        LoadSections();
 
-        // Load section string table
-        Offset64 StringTableStart = SectionHeaders[ElfHeader.StringTableIndex].SectionOffset;
-        Offset64 StringTableEnd = Find(SectionHeaders[ElfHeader.StringTableIndex].SectionOffset + 1, { 0x0, 0x0 });
-        
-        for (Offset64 Offset = 1; StringTableStart + Offset < StringTableEnd;)
-        {
-            Offset64 StringStart = SectionHeaders[ElfHeader.StringTableIndex].SectionOffset + Offset;
-            Address64 StringEnd = Find(StringStart, { 0x0 });
-            std::vector<UByte> SectionNameBytes = Read(StringStart, StringEnd - StringStart);
-
-            SectionNames.emplace_back(SectionNameBytes.begin(), SectionNameBytes.end());
-            Offset += StringEnd - StringStart + 1;
-        }
-
+        // Find the main function
     }
 
     bool ElfFile64::CheckElf()
@@ -140,5 +153,45 @@ namespace VS
     Address64 ElfFile64::FindMainFunction()
     {
         return Address64();
+    }
+    void ElfFile64::LoadSections()
+    {
+        std::vector<ElfSectionHeader64> SectionHeaders;
+        std::vector<std::string> SectionNames;
+
+        SectionHeaders.reserve(ElfHeader.SectionHeaderCount);
+        SectionNames.reserve(ElfHeader.SectionHeaderCount);
+        Sections.reserve(ElfHeader.SectionHeaderCount);
+
+        // Load section headers
+        for (size_t i = 0; i < ElfHeader.SectionHeaderCount; ++i)
+        {
+            std::vector<UByte> SectionHeaderData = Read(ElfHeader.SectionHeaderTableOffset + ElfHeader.SectionHeaderSize * i, ElfHeader.SectionHeaderSize);
+            SectionHeaders.emplace_back(*reinterpret_cast<ElfSectionHeader64*>(SectionHeaderData.data()));
+        }
+
+        // Load section string table
+        Offset64 StringTableStart = SectionHeaders[ElfHeader.StringTableIndex].SectionOffset;
+        Offset64 StringTableEnd = Find(SectionHeaders[ElfHeader.StringTableIndex].SectionOffset + 1, { 0x0, 0x0 });
+        std::unordered_map<UWord, UWord> StringTableIndices;
+        StringTableIndices.reserve(ElfHeader.SectionHeaderCount);
+
+        for (Offset64 Offset = 1; StringTableStart + Offset < StringTableEnd;)
+        {
+            Offset64 StringStart = SectionHeaders[ElfHeader.StringTableIndex].SectionOffset + Offset;
+            Address64 StringEnd = Find(StringStart, { 0x0 });
+            std::vector<UByte> SectionNameBytes = Read(StringStart, StringEnd - StringStart);
+
+            SectionNames.emplace_back(SectionNameBytes.begin(), SectionNameBytes.end());
+
+            StringTableIndices.insert_or_assign(Offset, SectionNames.size() - 1);
+            Offset += StringEnd - StringStart + 1;
+        }
+
+        // Combine section headers with names into a map for easier access
+        for (size_t i = 0; i < ElfHeader.SectionHeaderCount; ++i)
+        {
+            Sections.insert_or_assign(SectionNames[StringTableIndices[SectionHeaders[i].SectionName]], SectionHeaders[i]);
+        }
     }
 }

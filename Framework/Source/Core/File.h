@@ -24,7 +24,6 @@ namespace VS
 		inline static bool Exists(const std::string& FilePath) { return std::filesystem::exists(FilePath); }
 		static std::string ParseFilename(const std::string& FilePath);
 		
-		std::vector<UByte> Read();
 		//! Read a certain amount of bytes from the beginning of the file
 		std::vector<UByte> Read(size_t Bytes);
 		//! Read a certain amount of bytes from a specific byte in the file
@@ -37,31 +36,6 @@ namespace VS
 
 		virtual const std::string& GetFilePath() const { return FilePath; }
 	private:
-		
-		std::vector<UByte> ReadBinary(size_t From, size_t Bytes);
-		std::vector<UByte> ReadText(size_t From, size_t Bytes);
-		Offset64 FindBinary(size_t From, const std::vector<UByte>& Pattern);
-		Offset64 FindText(size_t From, const std::vector<UByte>& Pattern);
-
-		inline std::vector<UByte> ReadBinary(size_t Bytes)
-		{
-			return ReadBinary(0, Bytes);
-		}
-		inline std::vector<UByte> ReadText(size_t Bytes)
-		{
-			return ReadText(0, Bytes);
-		}
-
-		inline std::vector<UByte> ReadBinary() 
-		{
-			size_t FileSize = GetFileSize();
-			return ReadBinary(FileSize);
-		}
-		inline std::vector<UByte> ReadText()
-		{
-			size_t FileSize = GetFileSize();
-			return ReadText(FileSize);
-		}
 		
 
 	private:
