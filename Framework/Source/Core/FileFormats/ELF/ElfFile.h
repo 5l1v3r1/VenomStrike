@@ -7,6 +7,10 @@
 
 namespace VS
 {
+    template<typename E, typename P, typename S>
+    concept ElfFileC = (std::is_base_of<ElfHeader32, E>::value && std::is_base_of<ElfProgramHeader32, P>::value && std::is_base_of<ElfSectionHeader32, S>::value) 
+        || (std::is_base_of<ElfHeader64, E>::value && std::is_base_of<ElfProgramHeader64, P>::value && std::is_base_of<ElfSectionHeader64, S>::value);
+
     enum class EArchitecture : UByte
     {
         x86,
@@ -24,47 +28,29 @@ namespace VS
         EArchitecture Arch;
     };
 
-    class ElfFile32;
-    class ElfFile64;
-    std::variant<ElfFile32, ElfFile64> ParseElf(const ElfFilePrototype& FilePrototype);
-
-    class ElfFile32 : public ElfFilePrototype
+    template<typename ElfHeaderT, typename ProgramHeaderT, typename SectionHeaderT>
+        requires ElfFileC<ElfHeaderT, ProgramHeaderT, SectionHeaderT>
+    class ElfFile : public ElfFilePrototype
     {
     public:
-        ElfFile32(const std::string& Filepath);
-        const ElfHeader32& GetElfHeader() const { return ElfHeader; }
+        ElfFile(const std::string& Filepath);
+        const ElfHeaderT& GetElfHeader() const { return ElfHeader; }
     private:
         bool CheckElf(); // Returns true if we really have an ELF binary.
-        Address32 FindMainFunction();
+        Address64 FindMainFunction() { return 0; }
         void LoadSections();
 
     private:
-        ElfHeader32 ElfHeader;
+        ElfHeaderT ElfHeader;
 
-        std::vector<ElfProgramHeader32> ProgramHeaders;
-        std::unordered_map<std::string, ElfSectionHeader32> Sections;
-
-
-        Address32 MainFunction;
-    };
-
-    class ElfFile64 : public ElfFilePrototype
-    {
-    public:
-        ElfFile64(const std::string& Filepath);
-        const ElfHeader64& GetElfHeader() const { return ElfHeader; }
-
-    private:
-        bool CheckElf(); // Returns true if we really have an ELF binary.
-        Address64 FindMainFunction();
-        void LoadSections();
-
-    private:
-        ElfHeader64 ElfHeader;
-
-        std::vector<ElfProgramHeader64> ProgramHeaders;
-        std::unordered_map<std::string, ElfSectionHeader64> Sections;
+        std::vector<ProgramHeaderT> ProgramHeaders;
+        std::unordered_map<std::string, SectionHeaderT> Sections;
 
         Address64 MainFunction;
     };
+
+    using ElfFile32 = ElfFile<ElfHeader32, ElfProgramHeader32, ElfSectionHeader32>;
+    using ElfFile64 = ElfFile<ElfHeader64, ElfProgramHeader64, ElfSectionHeader64>;
+
+    std::variant<ElfFile32, ElfFile64> ParseElf(const ElfFilePrototype& FilePrototype);
 }
