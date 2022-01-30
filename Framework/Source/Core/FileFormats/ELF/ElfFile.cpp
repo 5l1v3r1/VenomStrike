@@ -40,7 +40,6 @@ namespace VS
     ElfFile<ElfHeaderT, ProgramHeaderT, SectionHeaderT, SymbolT>::ElfFile(const std::string& Filepath)
         : ElfFilePrototype(Filepath)
     {
-        FindMainFunction();
         std::vector<UByte> ElfHeaderBytes = Read(sizeof(ElfHeader64));
         std::memcpy(&ElfHeader, ElfHeaderBytes.data(), sizeof(ElfHeader64));
 
@@ -61,7 +60,6 @@ namespace VS
 
         LoadSections();
         LoadSymbols();
-        FindMainFunction();
     }
 
 
@@ -163,16 +161,4 @@ namespace VS
         return;
     }
 
-    template<typename ElfHeaderT, typename ProgramHeaderT, typename SectionHeaderT, typename SymbolT>
-    requires ElfFileC<ElfHeaderT, ProgramHeaderT, SectionHeaderT, SymbolT>
-    Address64 ElfFile<ElfHeaderT, ProgramHeaderT, SectionHeaderT, SymbolT>::FindMainFunction()
-    {
-        if (Symbols.find("main") == Symbols.end())
-        {
-            // Logger stuff
-            return 0;
-        }
-
-        return Symbols["main"].Value;
-    }
 }

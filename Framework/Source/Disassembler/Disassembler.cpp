@@ -29,16 +29,22 @@ namespace VS
 
         return Offsets; 
     }
-    std::vector<UByte> Disassembler::ExtractShellcode(const ElfFile32& File)
+    bool Disassembler::CompareInstruction(const std::vector<UByte>& Instruction, ZydisMnemonic InstructionMnemonic)
     {
-        Address64 MainFunction = File.GetMainFunction();
-
-        return std::vector<UByte>();
+        ZydisDecodedInstruction DecodedInstruction;
+        return ZYAN_SUCCESS(ZydisDecoderDecodeBuffer(&Decoder, Instruction.data(), Instruction.size(), &DecodedInstruction)) && DecodedInstruction.mnemonic == InstructionMnemonic;
     }
-    std::vector<UByte> Disassembler::ExtractShellcode(const ElfFile64& File)
+    std::vector<UByte> Disassembler::ExtractShellcode(ElfFile32& File)
     {
-        Address64 MainFunction = File.GetMainFunction();
+        ElfSymbol32 MainSymbol = File.GetSymbol("main");
+        
 
-        return std::vector<UByte>();
+        return File.Read(MainSymbol.Value, MainSymbol.Size);
+    }
+    std::vector<UByte> Disassembler::ExtractShellcode(ElfFile64& File)
+    {
+        ElfSymbol64 MainSymbol = File.GetSymbol("main");
+
+        return File.Read(MainSymbol.Value, MainSymbol.Size);
     }
 }

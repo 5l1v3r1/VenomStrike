@@ -40,13 +40,19 @@ namespace VS
         ElfFile(const std::string& Filepath);
         
         const ElfHeaderT& GetElfHeader() const { return ElfHeader; }
-        Address64 GetMainFunction() const { return MainFunction; }
-        
+        const SymbolT& GetSymbol(const std::string& Name)
+        {
+            if (Symbols.find(Name) == Symbols.end())
+            {
+                // Logger stuff
+                return Symbols[""];
+            }
+
+            return Symbols[Name];
+        }
 
     private:
         bool CheckElf(); // Returns true if we really have an ELF binary.
-        
-        Address64 FindMainFunction();
         
         void LoadSections();
         void LoadSymbols();
@@ -64,4 +70,5 @@ namespace VS
     using ElfFile64 = ElfFile<ElfHeader64, ElfProgramHeader64, ElfSectionHeader64, ElfSymbol64>;
 
     auto ParseElf(const ElfFilePrototype& FilePrototype) -> std::variant<ElfFile32, ElfFile64>;
+
 }

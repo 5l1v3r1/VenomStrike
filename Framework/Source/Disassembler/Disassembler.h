@@ -13,9 +13,10 @@ namespace VS
 	public:
 		Disassembler();
 		std::vector<Offset64> FindInstruction(const std::vector<UByte>& MachineCode, ZydisMnemonic Instruction);
+		bool CompareInstruction(const std::vector<UByte>& Instruction, ZydisMnemonic InstructionMnemonic);
 
-		std::vector<UByte> ExtractShellcode(const ElfFile32& File);
-		std::vector<UByte> ExtractShellcode(const ElfFile64& File);
+		std::vector<UByte> ExtractShellcode(ElfFile32& File);
+		std::vector<UByte> ExtractShellcode(ElfFile64& File);
 	private:
 		ZydisDecoder Decoder;
 	};
