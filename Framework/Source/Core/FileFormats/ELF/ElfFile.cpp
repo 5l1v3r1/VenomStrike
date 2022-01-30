@@ -35,11 +35,12 @@ namespace VS
 
     }
 
-    template<typename ElfHeaderT, typename ProgramHeaderT, typename SectionHeaderT>
-    requires ElfFileC<ElfHeaderT, ProgramHeaderT, SectionHeaderT>
-    ElfFile<ElfHeaderT, ProgramHeaderT, SectionHeaderT>::ElfFile(const std::string& Filepath)
+    template<typename ElfHeaderT, typename ProgramHeaderT, typename SectionHeaderT, typename SymbolT>
+    requires ElfFileC<ElfHeaderT, ProgramHeaderT, SectionHeaderT, SymbolT>
+    ElfFile<ElfHeaderT, ProgramHeaderT, SectionHeaderT, SymbolT>::ElfFile(const std::string& Filepath)
         : ElfFilePrototype(Filepath)
     {
+        FindMainFunction();
         std::vector<UByte> ElfHeaderBytes = Read(sizeof(ElfHeader64));
         std::memcpy(&ElfHeader, ElfHeaderBytes.data(), sizeof(ElfHeader64));
 
@@ -57,11 +58,15 @@ namespace VS
             std::vector<UByte> ProgramHeaderData = Read(ElfHeader.ProgramHeaderTableOffset + ElfHeader.ProgramHeaderSize * i, ElfHeader.ProgramHeaderSize);
             ProgramHeaders.emplace_back(*reinterpret_cast<ProgramHeaderT*>(ProgramHeaderData.data()));
         }
+
+        LoadSections();
+        LoadSymbols();
+        FindMainFunction();
     }
 
-    template<typename ElfHeaderT, typename ProgramHeaderT, typename SectionHeaderT>
-    requires ElfFileC<ElfHeaderT, ProgramHeaderT, SectionHeaderT>
-    bool ElfFile<ElfHeaderT, ProgramHeaderT, SectionHeaderT>::CheckElf()
+    template<typename ElfHeaderT, typename ProgramHeaderT, typename SectionHeaderT, typename SymbolT>
+    requires ElfFileC<ElfHeaderT, ProgramHeaderT, SectionHeaderT, SymbolT>
+    bool ElfFile<ElfHeaderT, ProgramHeaderT, SectionHeaderT, SymbolT>::CheckElf()
     {
         for (uint8_t i = 0; i < 4; ++i)
         {
@@ -71,9 +76,9 @@ namespace VS
         return true;
     }
 
-    template<typename ElfHeaderT, typename ProgramHeaderT, typename SectionHeaderT>
-    requires ElfFileC<ElfHeaderT, ProgramHeaderT, SectionHeaderT>
-    void ElfFile<ElfHeaderT, ProgramHeaderT, SectionHeaderT>::LoadSections()
+    template<typename ElfHeaderT, typename ProgramHeaderT, typename SectionHeaderT, typename SymbolT>
+    requires ElfFileC<ElfHeaderT, ProgramHeaderT, SectionHeaderT, SymbolT>
+    void ElfFile<ElfHeaderT, ProgramHeaderT, SectionHeaderT, SymbolT>::LoadSections()
     {
         std::vector<SectionHeaderT> SectionHeaders;
         std::vector<std::string> SectionNames;
@@ -114,4 +119,59 @@ namespace VS
         }
     }
 
+    template<typename ElfHeaderT, typename ProgramHeaderT, typename SectionHeaderT, typename SymbolT>
+    requires ElfFileC<ElfHeaderT, ProgramHeaderT, SectionHeaderT, SymbolT>
+    void ElfFile<ElfHeaderT, ProgramHeaderT, SectionHeaderT, SymbolT>::LoadSymbols()
+    {
+        // Location the symbol table
+        if (Sections.find(".symtab") == Sections.end() || Sections.find(".strtab") == Sections.end())
+        {
+            // Logger stuff
+            return;
+        }
+
+        std::vector<UByte> SymbolTableBytes = Read(Sections[".symtab"].SectionOffset, Sections[".symtab"].SectionSize);
+
+        uint32_t SymbolCount = Sections[".symtab"].SectionSize / Sections[".symtab"].EntrySize;
+
+        Symbols.reserve(SymbolCount);
+        std::vector<std::string> SymbolNames(SymbolCount);
+        std::unordered_map<UWord, UWord> StringTableIndices;
+        StringTableIndices.reserve(SymbolCount);
+
+        // Load the string section string table
+        Offset64 StringTableStart = Sections[".strtab"].SectionOffset;
+        Offset64 StringTableEnd = Find(Sections[".strtab"].SectionOffset + 1, { 0x0, 0x0 });
+
+        for (Offset64 Offset = 1; StringTableStart + Offset < StringTableEnd;)
+        {
+            Offset64 StringStart = Sections[".strtab"].SectionOffset + Offset;
+            Address64 StringEnd = Find(StringStart, { 0x0 });
+            std::vector<UByte> SymbolNameBytes = Read(StringStart, StringEnd - StringStart);
+
+            SymbolNames.emplace_back(SymbolNameBytes.begin(), SymbolNameBytes.end());
+
+            StringTableIndices.insert_or_assign(Offset, SymbolNames.size() - 1);
+            Offset += StringEnd - StringStart + 1;
+        }
+
+        for (size_t i = 0; i < SymbolCount; ++i)
+        {
+            Symbols.insert_or_assign(SymbolNames[StringTableIndices[reinterpret_cast<SymbolT*>(SymbolTableBytes.data() + i * Sections[".symtab"].EntrySize)->Name]], *reinterpret_cast<SymbolT*>(SymbolTableBytes.data() + i * Sections[".symtab"].EntrySize));
+        }
+        return;
+    }
+
+    template<typename ElfHeaderT, typename ProgramHeaderT, typename SectionHeaderT, typename SymbolT>
+    requires ElfFileC<ElfHeaderT, ProgramHeaderT, SectionHeaderT, SymbolT>
+    Address64 ElfFile<ElfHeaderT, ProgramHeaderT, SectionHeaderT, SymbolT>::FindMainFunction()
+    {
+        if (Symbols.find("main") == Symbols.end())
+        {
+            // Logger stuff
+            return 0;
+        }
+
+        return Symbols["main"].Value;
+    }
 }

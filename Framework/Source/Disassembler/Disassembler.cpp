@@ -4,7 +4,7 @@
 
 namespace VS
 {
-	VDisassembler::VDisassembler()
+	Disassembler::Disassembler()
 	{
 		ZydisDecoderInit(&Decoder, ZYDIS_MACHINE_MODE_LONG_64, ZYDIS_ADDRESS_WIDTH_64);        
         uint8_t Shellcode[] = { 0x48, 0x83, 0xec, 0x08, 0x48, 0x8d, 0x3d, 0xa9, 0x0f, 0x00, 0x00, 0x31, 0xc0, 0xff, 0xd0, 0x31, 0xc0, 0x48, 0x83, 0xc4, 0x08, 0xc3, 0x0f, 0x1f, 0x80, 0x00, 0x00, 0x00, 0x00 };
@@ -12,7 +12,7 @@ namespace VS
 	}
 
     // Returns all instances of an instruction given its mnemonic
-    std::vector<size_t> VDisassembler::FindInstruction(const std::vector<UByte>& MachineCode, ZydisMnemonic Instruction)
+    std::vector<size_t> Disassembler::FindInstruction(const std::vector<UByte>& MachineCode, ZydisMnemonic Instruction)
     {
         ZydisDecodedInstruction DecodedInstruction;
         std::vector<Offset64> Offsets;
@@ -28,5 +28,17 @@ namespace VS
         }
 
         return Offsets; 
+    }
+    std::vector<UByte> Disassembler::ExtractShellcode(const ElfFile32& File)
+    {
+        Address64 MainFunction = File.GetMainFunction();
+
+        return std::vector<UByte>();
+    }
+    std::vector<UByte> Disassembler::ExtractShellcode(const ElfFile64& File)
+    {
+        Address64 MainFunction = File.GetMainFunction();
+
+        return std::vector<UByte>();
     }
 }
