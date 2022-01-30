@@ -20,6 +20,9 @@ namespace VS
 	{
 	public:
 		File(const std::string& Filepath, EFileType FileType, bool CreateIfMissing = false);
+		File(File&&) = default;
+		File& operator=(File&&) = default;
+		virtual ~File();
 		
 		inline static bool Exists(const std::string& FilePath) { return std::filesystem::exists(FilePath); }
 		static std::string ParseFilename(const std::string& FilePath);

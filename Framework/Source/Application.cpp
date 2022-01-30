@@ -22,7 +22,6 @@ namespace VS
 		
 		ElfFilePrototype ElfFileProto("Test.elf");
 		auto ElfFile = ParseElf(ElfFileProto);
-		
 		int a = 0;
 	}
 }

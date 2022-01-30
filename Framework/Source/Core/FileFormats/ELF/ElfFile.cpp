@@ -26,11 +26,11 @@ namespace VS
         switch (FilePrototype.GetArch())
         {
         case EArchitecture::x86:
-            return ElfFile32(FilePrototype.GetFilePath());
+            return std::move(ElfFile32(FilePrototype.GetFilePath()));
         case EArchitecture::x64:
-            return ElfFile64(FilePrototype.GetFilePath());
+            return std::move(ElfFile64(FilePrototype.GetFilePath()));
         default:
-            return ElfFile32(""); // Invalid, this should never be reached
+            return std::move(ElfFile32("")); // Invalid, this should never be reached
         }
 
     }
@@ -63,6 +63,7 @@ namespace VS
         LoadSymbols();
         FindMainFunction();
     }
+
 
     template<typename ElfHeaderT, typename ProgramHeaderT, typename SectionHeaderT, typename SymbolT>
     requires ElfFileC<ElfHeaderT, ProgramHeaderT, SectionHeaderT, SymbolT>

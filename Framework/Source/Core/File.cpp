@@ -10,15 +10,23 @@ namespace VS
 		// Create the file if it doesn't exist
 		if (CreateIfMissing && !Exists(FilePath))
 		{
-			FileStream.open(FilePath);
+			FileStream.open(FilePath, std::ios::in | std::ios::out | std::ios::binary);
 			if (!FileStream.is_open())
 			{
 				throw std::runtime_error("Failed to create file: " + FilePath);
 			}
-			FileStream.close();
+		}
+		else
+		{
+			FileStream.open(FilePath, std::ios::in | std::ios::out | std::ios::binary);
 		}
 
 		Name = ParseFilename(FilePath);
+	}
+
+	File::~File()
+	{
+		FileStream.close();
 	}
 
 	std::string File::ParseFilename(const std::string& FilePath)
@@ -40,8 +48,6 @@ namespace VS
 
 	std::vector<UByte> File::Read(size_t From, size_t Bytes)
 	{
-		FileStream.open(FilePath, std::ios::in | std::ios::binary);
-
 		FileStream.clear();
 		FileStream.seekg(From, std::ios::beg);
 
@@ -53,7 +59,6 @@ namespace VS
 		std::vector<UByte> Buffer(Bytes);
 
 		FileStream.read(reinterpret_cast<char*>(Buffer.data()), Bytes);
-		FileStream.close();
 
 		Buffer.resize(Bytes);
 		return Buffer;
@@ -75,14 +80,9 @@ namespace VS
 
 	size_t File::GetFileSize()
 	{
-		FileStream.open(FilePath, std::ios::ate | std::ios::in | std::ios::binary);
-		if (!FileStream.is_open())
-		{
-			throw std::runtime_error("Failed to open file: " + FilePath);
-		}
+		FileStream.seekg(std::ios::end);
 
 		size_t FileSize = FileStream.tellg();
-		FileStream.close();
 
 		return FileSize;
 

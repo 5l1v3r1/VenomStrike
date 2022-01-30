@@ -63,5 +63,5 @@ namespace VS
     using ElfFile32 = ElfFile<ElfHeader32, ElfProgramHeader32, ElfSectionHeader32, ElfSymbol32>;
     using ElfFile64 = ElfFile<ElfHeader64, ElfProgramHeader64, ElfSectionHeader64, ElfSymbol64>;
 
-    std::variant<ElfFile32, ElfFile64> ParseElf(const ElfFilePrototype& FilePrototype);
+    auto ParseElf(const ElfFilePrototype& FilePrototype) -> std::variant<ElfFile32, ElfFile64>;
 }
