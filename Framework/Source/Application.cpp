@@ -6,12 +6,14 @@
 
 #include "Injectors/ShellcodeParser.h"
 #include "Disassembler/Disassembler.h"
-#include "Core/FileFormats/ELF/ElfFile.h"
+#include <Core/FileFormats/ELF/ElfFile.h>
+#include <Core/Log.h>
 
 namespace VS
 {
 	VApplication::VApplication()
 	{
+		Log::Init("App");
 	}
 	void VApplication::Run()
 	{
@@ -20,6 +22,8 @@ namespace VS
 		
 		Disassembler Disass;
 		std::vector<size_t> CallInstructions = Disass.FindInstruction(Shellcode, ZYDIS_MNEMONIC_CALL);
+		VS_LOG(error, "A");
+		VS_LOG_EXTERNAL(Ext, error, "Hello!");
 
 		ElfFilePrototype ElfFileProto("Test.elf");
 		auto ElfFile = ParseElf(ElfFileProto);
