@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <iostream>
+#include <spdlog/spdlog.h>
 
 #include "Injectors/ShellcodeParser.h"
 #include "Disassembler/Disassembler.h"
@@ -19,7 +20,7 @@ namespace VS
 		
 		Disassembler Disass;
 		std::vector<size_t> CallInstructions = Disass.FindInstruction(Shellcode, ZYDIS_MNEMONIC_CALL);
-		
+
 		ElfFilePrototype ElfFileProto("Test.elf");
 		auto ElfFile = ParseElf(ElfFileProto);
 		if (ElfFileProto.GetArch() == EArchitecture::x64)

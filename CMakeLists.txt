@@ -25,15 +25,20 @@ message(${SOURCES})
 add_executable (${PROJECT_NAME} ${SOURCES})
 
 add_subdirectory(External/zydis)
+add_subdirectory(External/spdlog)
 
 # include_directories(External)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     ${PROJECT_SOURCE_DIR}/Framework/Source
     ${PROJECT_SOURCE_DIR}/External/zydis/include
+    ${PROJECT_SOURCE_DIR}/External/spdlog/include
     )
  
-target_link_libraries("VenomStrike" PRIVATE "Zydis")
+target_link_libraries("VenomStrike" PRIVATE 
+    "Zydis"
+    "spdlog::spdlog"
+    )
 
 target_link_directories(${PROJECT_NAME} PUBLIC
     
