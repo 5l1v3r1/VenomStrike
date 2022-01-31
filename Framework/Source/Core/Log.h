@@ -22,10 +22,10 @@ namespace VS
 }
 
 //! In both macros, LEVEL should be either trace/info/warning/error/critical/ (notice the lowercase)
-#define VS_LOG(LEVEL, ...)	::VS::Log::GetLogger()->LEVEL((__VA_ARGS__))
+#define VS_LOG(LEVEL, ...)	::VS::Log::GetLogger()->LEVEL(__VA_ARGS__)
 
 //! Should be used for logs that originated from a source other than the current application (the server, a tool, etc.)
 #define VS_LOG_EXTERNAL(SOURCE, LEVEL, ...)	\
 											VS::Log::GetLogger()->set_pattern("%^[%T][" #SOURCE "][%l] %v %$"); \
-											VS::Log::GetLogger()->LEVEL((__VA_ARGS__)); \
+											VS::Log::GetLogger()->LEVEL(__VA_ARGS__); \
 											VS::Log::GetLogger()->set_pattern(VS::Log::GetPattern());

@@ -13,7 +13,7 @@ namespace VS
 {
 	VApplication::VApplication()
 	{
-		Log::Init("App");
+		Log::Init("Test");
 	}
 	void VApplication::Run()
 	{
@@ -24,13 +24,14 @@ namespace VS
 		std::vector<size_t> CallInstructions = Disass.FindInstruction(Shellcode, ZYDIS_MNEMONIC_CALL);
 		VS_LOG(error, "A");
 		VS_LOG_EXTERNAL(Ext, error, "Hello!");
-
+		
 		ElfFilePrototype ElfFileProto("Test.elf");
 		auto ElfFile = ParseElf(ElfFileProto);
 		if (ElfFileProto.GetArch() == EArchitecture::x64)
 		{
 			std::vector<UByte> Shell = Disass.ExtractShellcode(std::get<ElfFile64>(ElfFile));
 			
+
 			int a = 0;
 		}
 		else
