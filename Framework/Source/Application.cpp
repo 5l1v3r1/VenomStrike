@@ -28,7 +28,7 @@ namespace VS
 		VS_LOG_EXTERNAL(Ext, error, "Hello!");
 
 		// Command tests
-		Commander::ParseCommand(" asd	asd E ");
+		Commander::ParseCommand(" asd	 \t asdasd E ");
 
 
 		// Elf stuff
