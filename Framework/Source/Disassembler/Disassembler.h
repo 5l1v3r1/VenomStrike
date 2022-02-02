@@ -11,13 +11,16 @@ namespace VS
 	class Disassembler
 	{
 	public:
-		Disassembler();
-		std::vector<Offset64> FindInstruction(const std::vector<UByte>& MachineCode, ZydisMnemonic Instruction);
-		bool CompareInstruction(const std::vector<UByte>& Instruction, ZydisMnemonic InstructionMnemonic);
+		Disassembler() = delete;
 
-		std::vector<UByte> ExtractShellcode(ElfFile32& File);
-		std::vector<UByte> ExtractShellcode(ElfFile64& File);
+		static void Init();
+		static std::vector<Offset64> FindInstruction(const std::vector<UByte>& MachineCode, ZydisMnemonic Instruction);
+		static bool CompareInstruction(const std::vector<UByte>& Instruction, ZydisMnemonic InstructionMnemonic);
+
+		static std::vector<UByte> ExtractShellcode(ElfFile32& File);
+		static std::vector<UByte> ExtractShellcode(ElfFile64& File);
+
 	private:
-		ZydisDecoder Decoder;
+		static ZydisDecoder Decoder;
 	};
 }
