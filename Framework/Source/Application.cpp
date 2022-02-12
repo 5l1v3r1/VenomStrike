@@ -18,14 +18,20 @@ namespace VS
 		Log::Init("Test");
 		Disassembler::Init();
 	}
+
+	VApplication::~VApplication()
+	{
+		VS_LOG(Info, "Bye Bye");
+	}
+
 	void VApplication::Run()
 	{
 		std::vector<uint8_t> Shellcode = { 0x48, 0x83, 0xec, 0x08, 0x48, 0x8d, 0x3d, 0xa9, 0x0f, 0x00, 0x00, 0x31, 0xc0, 0xff, 0xd0, 0x31, 0xc0, 0x48, 0x83, 0xc4, 0x08, 0xc3, 0x0f, 0x1f, 0x80, 0x00, 0x00, 0x00, 0x00 };
 		//std::vector<std::byte> Shellcode;
 
 		std::vector<size_t> CallInstructions = Disassembler::FindInstruction(Shellcode, ZYDIS_MNEMONIC_CALL);
-		VS_LOG(error, "A");
-		VS_LOG_EXTERNAL(Ext, error, "Hello!");
+		VS_LOG(Info, "A");
+		VS_LOG_EXTERNAL(Ext, Info, "Hello!");
 
 		// Command tests
 		std::shared_ptr<Command> Cmd = Commander::ParseCommand("help asdasd");

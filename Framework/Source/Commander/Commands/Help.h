@@ -19,7 +19,7 @@ namespace VS
 
 		virtual Result Execute() override
 		{
-			VS_LOG(info, BasicHelp + "\n" + HelpMessage);
+			VS_LOG(Output, BasicHelp + "\n" + HelpMessage);
 			return Result{ EResult::Ok };
 		}
 
@@ -28,6 +28,6 @@ namespace VS
 		inline static const std::string BasicHelp = "Provides basic help information.";
 
 	private:
-		inline static const std::string HelpMessage = "help: Provides basic help information";
+		inline static const std::string HelpMessage = "";
 	};
 }

@@ -6,6 +6,7 @@ namespace VS
 	{
 	public:
 		VApplication();
+		~VApplication();
 		void Run();
 
 	public:
