@@ -8,7 +8,7 @@
 #include "Disassembler/Disassembler.h"
 #include <Core/FileFormats/ELF/ElfFile.h>
 #include <Core/Log.h>
-#include <Commander/Command.h>
+#include <Commander/Commands/Command.h>
 #include <Commander/Commander.h>
 
 namespace VS
@@ -28,8 +28,8 @@ namespace VS
 		VS_LOG_EXTERNAL(Ext, error, "Hello!");
 
 		// Command tests
-		Commander::ParseCommand(" asd	 \t asdasd E ");
-
+		std::shared_ptr<Command> Cmd = Commander::ParseCommand("help asdasd");
+		Cmd->Execute();
 
 		// Elf stuff
 		ElfFilePrototype ElfFileProto("Test.elf");

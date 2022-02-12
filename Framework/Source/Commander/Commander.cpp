@@ -7,9 +7,11 @@
 
 #include <Core/Utils/StringUtils.h>
 
+#include "Commands/Help.h"
+
 namespace VS
 {
-	RResult<Command> Commander::ParseCommand(const std::string& Input)
+	std::shared_ptr<Command> Commander::ParseCommand(const std::string& Input)
 	{
 		std::string Cmd = Trim(Input);
 
@@ -22,9 +24,13 @@ namespace VS
 		size_t NumberOfArgs = std::count(Cmd.begin(), Cmd.end(), ' ');
 
 		std::vector<std::string> Args(NumberOfArgs + 1);
-		Args = Split(Cmd, " ");
+		Args = std::move(Split(Cmd, " "));
 
+		if (Args[0] == HELP_MNEMONIC)
+		{
+			return std::make_shared<HelpCommand>(Args);
+		}
 
-		return RResult<Command>();
+		return std::make_shared<Command>(Args);
 	}
 }

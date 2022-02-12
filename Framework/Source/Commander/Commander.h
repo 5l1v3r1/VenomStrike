@@ -1,13 +1,16 @@
 #pragma once
 
+#include <memory>
+
 #include <Core/Result.h>
-#include "Command.h"
+#include "Commands/Command.h"
+
 
 namespace VS
 {
 	class Commander
 	{
 	public:
-		static RResult<Command> ParseCommand(const std::string& Input);
+		static std::shared_ptr<Command> ParseCommand(const std::string& Input);
 	};
 }
