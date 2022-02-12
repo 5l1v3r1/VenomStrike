@@ -1,0 +1,238 @@
+\hypertarget{_elf_section_8h_source}{}\doxysection{Elf\+Section.\+h}
+\label{_elf_section_8h_source}\index{Framework/Source/Core/FileFormats/ELF/ElfComponents/ElfSection.h@{Framework/Source/Core/FileFormats/ELF/ElfComponents/ElfSection.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <Core/FileFormats/ELF/ElfDefines.h>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <concepts>}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{keyword}{namespace }VS}
+\DoxyCodeLine{7 \{}
+\DoxyCodeLine{8     \textcolor{keyword}{enum class} EElfSectionType : UWord;}
+\DoxyCodeLine{9     \textcolor{keyword}{enum class} EElfSectionFlags : UWord;}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{12     \textcolor{keyword}{struct }\mbox{\hyperlink{struct_v_s_1_1_elf_section_header32}{ElfSectionHeader32}}}
+\DoxyCodeLine{13     \{}
+\DoxyCodeLine{14         UWord SectionName;             \textcolor{comment}{/* Section name (string tbl index) */}}
+\DoxyCodeLine{15         EElfSectionType SectionType;   \textcolor{comment}{/* Section type */}}
+\DoxyCodeLine{16         EElfSectionFlags SectionFlags; \textcolor{comment}{/* Section flags */}}
+\DoxyCodeLine{17         Address32 SectionAddress;      \textcolor{comment}{/* Section virtual addr at execution */}}
+\DoxyCodeLine{18         ElfOffset32 SectionOffset;     \textcolor{comment}{/* Section file offset */}}
+\DoxyCodeLine{19         UWord SectionSize;             \textcolor{comment}{/* Section size in bytes */}}
+\DoxyCodeLine{20         UWord SectionLink;             \textcolor{comment}{/* Link to another section */}}
+\DoxyCodeLine{21         UWord SectionInfo;             \textcolor{comment}{/* Additional section information */}}
+\DoxyCodeLine{22         UWord SectionAlignment;        \textcolor{comment}{/* Section alignment */}}
+\DoxyCodeLine{23         UWord EntrySize;               \textcolor{comment}{/* Entry size if section holds table */}}
+\DoxyCodeLine{24     \};}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{27     \textcolor{keyword}{struct }\mbox{\hyperlink{struct_v_s_1_1_elf_section_header64}{ElfSectionHeader64}}}
+\DoxyCodeLine{28     \{}
+\DoxyCodeLine{29         UWord SectionName;             \textcolor{comment}{/* Section name (string tbl index) */}}
+\DoxyCodeLine{30         EElfSectionType SectionType;   \textcolor{comment}{/* Section type */}}
+\DoxyCodeLine{31         EElfSectionFlags SectionFlags; \textcolor{comment}{/* Section flags */}}
+\DoxyCodeLine{32         Address64 SectionAddress;      \textcolor{comment}{/* Section virtual addr at execution */}}
+\DoxyCodeLine{33         ElfOffset64 SectionOffset;     \textcolor{comment}{/* Section file offset */}}
+\DoxyCodeLine{34         UWord SectionSize;             \textcolor{comment}{/* Section size in bytes */}}
+\DoxyCodeLine{35         UWord SectionLink;             \textcolor{comment}{/* Link to another section */}}
+\DoxyCodeLine{36         UWord SectionInfo;             \textcolor{comment}{/* Additional section information */}}
+\DoxyCodeLine{37         UWord SectionAlignment;        \textcolor{comment}{/* Section alignment */}}
+\DoxyCodeLine{38         UWord EntrySize;               \textcolor{comment}{/* Entry size if section holds table */}}
+\DoxyCodeLine{39     \};}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41     \textcolor{comment}{// \#define VERSIONTAGIDX(tag) (DT\_VERNEEDNUM -\/ (tag)) /* Reverse order! */ erudite shit which i am not even going to pretend i understand}}
+\DoxyCodeLine{42     \textcolor{comment}{// \#define ADDRTAGIDX(tag) (DT\_ADDRRNGHI -\/ (tag))     /* Reverse order! */}}
+\DoxyCodeLine{44 \textcolor{comment}{}    \textcolor{keyword}{template} <std::\textcolor{keywordtype}{int}egral Arch> }
+\DoxyCodeLine{45     \textcolor{keyword}{struct }\mbox{\hyperlink{struct_v_s_1_1_e_elf_dyn_entry_type_proxy}{EElfDynEntryTypeProxy}}}
+\DoxyCodeLine{46     \{}
+\DoxyCodeLine{47         \textcolor{keyword}{enum class} EElfDynEntryType : Arch}
+\DoxyCodeLine{48         \{}
+\DoxyCodeLine{49             \_NULL = 0,            \textcolor{comment}{/* Marks end of dynamic section */}}
+\DoxyCodeLine{50             NEEDED = 1,           \textcolor{comment}{/* Name of needed library */}}
+\DoxyCodeLine{51             PLTRELSZ = 2,         \textcolor{comment}{/* Size in bytes of PLT relocs */}}
+\DoxyCodeLine{52             PLTGOT = 3,           \textcolor{comment}{/* Processor defined value */}}
+\DoxyCodeLine{53             HASH = 4,             \textcolor{comment}{/* Address of symbol hash table */}}
+\DoxyCodeLine{54             STRTAB = 5,           \textcolor{comment}{/* Address of string table */}}
+\DoxyCodeLine{55             SYMTAB = 6,           \textcolor{comment}{/* Address of symbol table */}}
+\DoxyCodeLine{56             RELA = 7,             \textcolor{comment}{/* Address of Rela relocs */}}
+\DoxyCodeLine{57             RELASZ = 8,           \textcolor{comment}{/* Total size of Rela relocs */}}
+\DoxyCodeLine{58             RELAENT = 9,          \textcolor{comment}{/* Size of one Rela reloc */}}
+\DoxyCodeLine{59             STRSZ = 10,           \textcolor{comment}{/* Size of string table */}}
+\DoxyCodeLine{60             SYMENT = 11,          \textcolor{comment}{/* Size of one symbol table entry */}}
+\DoxyCodeLine{61             INIT = 12,            \textcolor{comment}{/* Address of init function */}}
+\DoxyCodeLine{62             FINI = 13,            \textcolor{comment}{/* Address of termination function */}}
+\DoxyCodeLine{63             SONAME = 14,          \textcolor{comment}{/* Name of shared object */}}
+\DoxyCodeLine{64             RPATH = 15,           \textcolor{comment}{/* Library search path (deprecated) */}}
+\DoxyCodeLine{65             SYMBOLIC = 16,        \textcolor{comment}{/* Start symbol search here */}}
+\DoxyCodeLine{66             REL = 17,             \textcolor{comment}{/* Address of Rel relocs */}}
+\DoxyCodeLine{67             RELSZ = 18,           \textcolor{comment}{/* Total size of Rel relocs */}}
+\DoxyCodeLine{68             RELENT = 19,          \textcolor{comment}{/* Size of one Rel reloc */}}
+\DoxyCodeLine{69             PLTREL = 20,          \textcolor{comment}{/* Type of reloc in PLT */}}
+\DoxyCodeLine{70             DEBUG = 21,           \textcolor{comment}{/* For debugging; unspecified */}}
+\DoxyCodeLine{71             TEXTREL = 22,         \textcolor{comment}{/* Reloc might modify .text */}}
+\DoxyCodeLine{72             JMPREL = 23,          \textcolor{comment}{/* Address of PLT relocs */}}
+\DoxyCodeLine{73             BIND\_NOW = 24,        \textcolor{comment}{/* Process relocations of object */}}
+\DoxyCodeLine{74             INIT\_ARRAY = 25,      \textcolor{comment}{/* Array with addresses of init fct */}}
+\DoxyCodeLine{75             FINI\_ARRAY = 26,      \textcolor{comment}{/* Array with addresses of fini fct */}}
+\DoxyCodeLine{76             NIT\_ARRAYSZ = 27,     \textcolor{comment}{/* Size in bytes of DT\_INIT\_ARRAY */}}
+\DoxyCodeLine{77             FINI\_ARRAYSZ = 28,    \textcolor{comment}{/* Size in bytes of DT\_FINI\_ARRAY */}}
+\DoxyCodeLine{78             RUNPATH = 29,         \textcolor{comment}{/* Library search path */}}
+\DoxyCodeLine{79             FLAGS = 30,           \textcolor{comment}{/* Flags for the object being loaded */}}
+\DoxyCodeLine{80             ENCODING = 32,        \textcolor{comment}{/* Start of encoded range */}}
+\DoxyCodeLine{81             PREINIT\_ARRAY = 32,   \textcolor{comment}{/* Array with addresses of preinit fct*/}}
+\DoxyCodeLine{82             PREINIT\_ARRAYSZ = 33, \textcolor{comment}{/* size in bytes of DT\_PREINIT\_ARRAY */}}
+\DoxyCodeLine{83             SYMTAB\_SHNDX = 34,    \textcolor{comment}{/* Address of SYMTAB\_SHNDX section */}}
+\DoxyCodeLine{84             NUM = 35,             \textcolor{comment}{/* Number used */}}
+\DoxyCodeLine{85             LOOS = 0x6000000d,    \textcolor{comment}{/* Start of OS-\/specific */}}
+\DoxyCodeLine{86             HIOS = 0x6ffff000,    \textcolor{comment}{/* End of OS-\/specific */}}
+\DoxyCodeLine{87             LOPROC = 0x70000000,  \textcolor{comment}{/* Start of processor-\/specific */}}
+\DoxyCodeLine{88             HIPROC = 0x7fffffff,  \textcolor{comment}{/* End of processor-\/specific */}}
+\DoxyCodeLine{89             PROCNUM = 0x37,       \textcolor{comment}{/* Most used by any processor */}}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91             \textcolor{comment}{/* Entries which fall between VALRNGHI \& VALRNGLO use the}}
+\DoxyCodeLine{92 \textcolor{comment}{        Union.Value field of the ElfDynEntry structure.  This follows Sun's}}
+\DoxyCodeLine{93 \textcolor{comment}{        approach.  */}}
+\DoxyCodeLine{94             VALRNGLO = 0x6ffffd00,}
+\DoxyCodeLine{95             GNU\_PRELINKED = 0x6ffffdf5,  \textcolor{comment}{/* Prelinking timestamp */}}
+\DoxyCodeLine{96             GNU\_CONFLICTSZ = 0x6ffffdf6, \textcolor{comment}{/* Size of conflict section */}}
+\DoxyCodeLine{97             GNU\_LIBLISTSZ = 0x6ffffdf7,  \textcolor{comment}{/* Size of library list */}}
+\DoxyCodeLine{98             CHECKSUM = 0x6ffffdf8,}
+\DoxyCodeLine{99             PLTPADSZ = 0x6ffffdf9,}
+\DoxyCodeLine{100             MOVEENT = 0x6ffffdfa,}
+\DoxyCodeLine{101             MOVESZ = 0x6ffffdfb,}
+\DoxyCodeLine{102             FEATURE\_1 = 0x6ffffdfc, \textcolor{comment}{/* Feature selection (DTF\_*).  */}}
+\DoxyCodeLine{103             POSFLAG\_1 = 0x6ffffdfd, \textcolor{comment}{/* Flags for DT\_* entries, effecting}}
+\DoxyCodeLine{104 \textcolor{comment}{                       the following DT\_* entry.  */}}
+\DoxyCodeLine{105             SYMINSZ = 0x6ffffdfe,   \textcolor{comment}{/* Size of syminfo table (in bytes) */}}
+\DoxyCodeLine{106             SYMINENT = 0x6ffffdff,  \textcolor{comment}{/* Entry size of syminfo */}}
+\DoxyCodeLine{107             VALRNGHI = 0x6ffffdff,}
+\DoxyCodeLine{108             VALNUM = 12,}
+\DoxyCodeLine{109 }
+\DoxyCodeLine{110             \textcolor{comment}{/* Entries which fall between ADDRRNGHI \& ADDRRNGLO use the}}
+\DoxyCodeLine{111 \textcolor{comment}{        Union.Pointer field of the ElfDynEntry structure.}}
+\DoxyCodeLine{112 \textcolor{comment}{        If any adjustment is made to the ELF object after it has been}}
+\DoxyCodeLine{113 \textcolor{comment}{        built these entries will need to be adjusted.  */}}
+\DoxyCodeLine{114             ADDRRNGLO = 0x6ffffe00,}
+\DoxyCodeLine{115             GNU\_HASH = 0x6ffffef5, \textcolor{comment}{/* GNU-\/style hash table.  */}}
+\DoxyCodeLine{116             TLSDESC\_PLT = 0x6ffffef6,}
+\DoxyCodeLine{117             TLSDESC\_GOT = 0x6ffffef7,}
+\DoxyCodeLine{118             GNU\_CONFLICT = 0x6ffffef8, \textcolor{comment}{/* Start of conflict section */}}
+\DoxyCodeLine{119             GNU\_LIBLIST = 0x6ffffef9,  \textcolor{comment}{/* Library list */}}
+\DoxyCodeLine{120             CONFIG = 0x6ffffefa,       \textcolor{comment}{/* Configuration information.  */}}
+\DoxyCodeLine{121             DEPAUDIT = 0x6ffffefb,     \textcolor{comment}{/* Dependency auditing.  */}}
+\DoxyCodeLine{122             AUDIT = 0x6ffffefc,        \textcolor{comment}{/* Object auditing.  */}}
+\DoxyCodeLine{123             PLTPAD = 0x6ffffefd,       \textcolor{comment}{/* PLT padding.  */}}
+\DoxyCodeLine{124             MOVETAB = 0x6ffffefe,      \textcolor{comment}{/* Move table.  */}}
+\DoxyCodeLine{125             SYMINFO = 0x6ffffeff,      \textcolor{comment}{/* Syminfo table.  */}}
+\DoxyCodeLine{126             ADDRRNGHI = 0x6ffffeff,}
+\DoxyCodeLine{127             ADDRNUM = 11,}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{129             \textcolor{comment}{/* The versioning entry types.  The next are defined as part of the}}
+\DoxyCodeLine{130 \textcolor{comment}{        GNU extension.  */}}
+\DoxyCodeLine{131             VERSYM = 0x6ffffff0,}
+\DoxyCodeLine{132 }
+\DoxyCodeLine{133             RELACOUNT = 0x6ffffff9,}
+\DoxyCodeLine{134             RELCOUNT = 0x6ffffffa,}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136             \textcolor{comment}{/* These were chosen by Sun.  */}}
+\DoxyCodeLine{137             FLAGS\_1 = 0x6ffffffb,    \textcolor{comment}{/* State flags, see DF\_1\_* below.  */}}
+\DoxyCodeLine{138             VERDEF = 0x6ffffffc,     \textcolor{comment}{/* Address of version definition}}
+\DoxyCodeLine{139 \textcolor{comment}{                       table */}}
+\DoxyCodeLine{140             VERDEFNUM = 0x6ffffffd,  \textcolor{comment}{/* Number of version definitions */}}
+\DoxyCodeLine{141             VERNEED = 0x6ffffffe,    \textcolor{comment}{/* Address of table with needed}}
+\DoxyCodeLine{142 \textcolor{comment}{                       versions */}}
+\DoxyCodeLine{143             VERNEEDNUM = 0x6fffffff, \textcolor{comment}{/* Number of needed versions */}}
+\DoxyCodeLine{144             VERSIONTAGNUM = 16}
+\DoxyCodeLine{145         \};}
+\DoxyCodeLine{146     \};}
+\DoxyCodeLine{147     \textcolor{keyword}{template}<std::\textcolor{keywordtype}{int}egral Arch>}
+\DoxyCodeLine{148     \textcolor{keyword}{using} EElfDynEntryType = \textcolor{keyword}{typename} EElfDynEntryTypeProxy<Arch>::EElfDynEntryType;}
+\DoxyCodeLine{149 }
+\DoxyCodeLine{151     \textcolor{keyword}{struct }\mbox{\hyperlink{struct_v_s_1_1_elf_dyn_entry32}{ElfDynEntry32}}}
+\DoxyCodeLine{152     \{}
+\DoxyCodeLine{153         EElfDynEntryType<SWord> Type; \textcolor{comment}{// Dynamic entry type }}
+\DoxyCodeLine{154         \textcolor{keyword}{union}}
+\DoxyCodeLine{155         \{}
+\DoxyCodeLine{156             UWord Value;       \textcolor{comment}{// Integer value }}
+\DoxyCodeLine{157             Address32 Pointer; \textcolor{comment}{// Address value}}
+\DoxyCodeLine{158         \} Union;}
+\DoxyCodeLine{159     \};}
+\DoxyCodeLine{160 }
+\DoxyCodeLine{162     \textcolor{keyword}{struct }\mbox{\hyperlink{struct_v_s_1_1_elf_dyn_entry64}{ElfDynEntry64}}}
+\DoxyCodeLine{163     \{}
+\DoxyCodeLine{164         EElfDynEntryType<SDoubleWord> Type; \textcolor{comment}{// Dynamic entry type}}
+\DoxyCodeLine{165         \textcolor{keyword}{union}}
+\DoxyCodeLine{166         \{}
+\DoxyCodeLine{167             UDoubleWord Value; \textcolor{comment}{// Integer value }}
+\DoxyCodeLine{168             Address64 Pointer; \textcolor{comment}{// Address value }}
+\DoxyCodeLine{169         \} Union;}
+\DoxyCodeLine{170     \};}
+\DoxyCodeLine{171 }
+\DoxyCodeLine{173     \textcolor{keyword}{enum class} EElfSectionType : UWord}
+\DoxyCodeLine{174     \{}
+\DoxyCodeLine{175         \_NULL = 0,                   \textcolor{comment}{/* Section header table entry unused */}}
+\DoxyCodeLine{176         PROGBITS = 1,                \textcolor{comment}{/* Program data */}}
+\DoxyCodeLine{177         SYMTAB = 2,                  \textcolor{comment}{/* Symbol table */}}
+\DoxyCodeLine{178         STRTAB = 3,                  \textcolor{comment}{/* String table */}}
+\DoxyCodeLine{179         RELA = 4,                    \textcolor{comment}{/* Relocation entries with addends */}}
+\DoxyCodeLine{180         HASH = 5,                    \textcolor{comment}{/* Symbol hash table */}}
+\DoxyCodeLine{181         DYNAMIC = 6,                 \textcolor{comment}{/* Dynamic linking information */}}
+\DoxyCodeLine{182         NOTE = 7,                    \textcolor{comment}{/* Notes */}}
+\DoxyCodeLine{183         NOBITS = 8,                  \textcolor{comment}{/* Program space with no data (bss) */}}
+\DoxyCodeLine{184         REL = 9,                     \textcolor{comment}{/* Relocation entries, no addends */}}
+\DoxyCodeLine{185         SHLIB = 10,                  \textcolor{comment}{/* Reserved */}}
+\DoxyCodeLine{186         DYNSYM = 11,                 \textcolor{comment}{/* Dynamic linker symbol table */}}
+\DoxyCodeLine{187         INIT\_ARRAY = 14,             \textcolor{comment}{/* Array of constructors */}}
+\DoxyCodeLine{188         FINI\_ARRAY = 15,             \textcolor{comment}{/* Array of destructors */}}
+\DoxyCodeLine{189         PREINIT\_ARRAY = 16,          \textcolor{comment}{/* Array of pre-\/constructors */}}
+\DoxyCodeLine{190         GROUP = 17,                  \textcolor{comment}{/* Section group */}}
+\DoxyCodeLine{191         SYMTAB\_SHNDX = 18,           \textcolor{comment}{/* Extended section indices */}}
+\DoxyCodeLine{192         NUM = 19,                    \textcolor{comment}{/* Number of defined types.  */}}
+\DoxyCodeLine{193         LOOS = 0x60000000,           \textcolor{comment}{/* Start OS-\/specific.  */}}
+\DoxyCodeLine{194         GNU\_ATTRIBUTES = 0x6ffffff5, \textcolor{comment}{/* Object attributes.  */}}
+\DoxyCodeLine{195         GNU\_HASH = 0x6ffffff6,       \textcolor{comment}{/* GNU-\/style hash table.  */}}
+\DoxyCodeLine{196         GNU\_LIBLIST = 0x6ffffff7,    \textcolor{comment}{/* Prelink library list */}}
+\DoxyCodeLine{197         CHECKSUM = 0x6ffffff8,       \textcolor{comment}{/* Checksum for DSO content.  */}}
+\DoxyCodeLine{198         LOSUNW = 0x6ffffffa,         \textcolor{comment}{/* Sun-\/specific low bound.  */}}
+\DoxyCodeLine{199         SUNW\_move = 0x6ffffffa,}
+\DoxyCodeLine{200         SUNW\_COMDAT = 0x6ffffffb,}
+\DoxyCodeLine{201         SUNW\_syminfo = 0x6ffffffc,}
+\DoxyCodeLine{202         GNU\_verdef = 0x6ffffffd,  \textcolor{comment}{/* Version definition section.  */}}
+\DoxyCodeLine{203         GNU\_verneed = 0x6ffffffe, \textcolor{comment}{/* Version needs section.  */}}
+\DoxyCodeLine{204         GNU\_versym = 0x6fffffff,  \textcolor{comment}{/* Version symbol table.  */}}
+\DoxyCodeLine{205         HISUNW = 0x6fffffff,      \textcolor{comment}{/* Sun-\/specific high bound.  */}}
+\DoxyCodeLine{206         HIOS = 0x6fffffff,        \textcolor{comment}{/* End OS-\/specific type */}}
+\DoxyCodeLine{207         LOPROC = 0x70000000,      \textcolor{comment}{/* Start of processor-\/specific */}}
+\DoxyCodeLine{208         HIPROC = 0x7fffffff,      \textcolor{comment}{/* End of processor-\/specific */}}
+\DoxyCodeLine{209         LOUSER = 0x80000000,      \textcolor{comment}{/* Start of application-\/specific */}}
+\DoxyCodeLine{210         HIUSER = 0x8fffffff       \textcolor{comment}{/* End of application-\/specific */}}
+\DoxyCodeLine{211     \};}
+\DoxyCodeLine{212 }
+\DoxyCodeLine{214     \textcolor{keyword}{enum class} EElfSectionFlags : UWord}
+\DoxyCodeLine{215     \{}
+\DoxyCodeLine{216         WRITE = (1 << 0),            \textcolor{comment}{/* Writable */}}
+\DoxyCodeLine{217         ALLOC = (1 << 1),            \textcolor{comment}{/* Occupies memory during execution */}}
+\DoxyCodeLine{218         EXECINSTR = (1 << 2),        \textcolor{comment}{/* Executable */}}
+\DoxyCodeLine{219         MERGE = (1 << 4),            \textcolor{comment}{/* Might be merged */}}
+\DoxyCodeLine{220         STRINGS = (1 << 5),          \textcolor{comment}{/* Contains nul-\/terminated strings */}}
+\DoxyCodeLine{221         INFO\_LINK = (1 << 6),        \textcolor{comment}{/* `sh\_info' contains SHT index */}}
+\DoxyCodeLine{222         LINK\_ORDER = (1 << 7),       \textcolor{comment}{/* Preserve order after combining */}}
+\DoxyCodeLine{223         OS\_NONCONFORMING = (1 << 8), \textcolor{comment}{/* Non-\/standard OS specific handling required */}}
+\DoxyCodeLine{224         GROUP = (1 << 9),            \textcolor{comment}{/* Section is member of a group.  */}}
+\DoxyCodeLine{225         TLS = (1 << 10),             \textcolor{comment}{/* Section hold thread-\/local data.  */}}
+\DoxyCodeLine{226         COMPRESSED = (1 << 11),      \textcolor{comment}{/* Section with compressed data. */}}
+\DoxyCodeLine{227         MASKOS = 0x0ff00000,         \textcolor{comment}{/* OS-\/specific.  */}}
+\DoxyCodeLine{228         MASKPROC = 0xf0000000,       \textcolor{comment}{/* Processor-\/specific */}}
+\DoxyCodeLine{229         GNU\_RETAIN = (1 << 21),      \textcolor{comment}{/* Not to be GCed by linker.  */}}
+\DoxyCodeLine{230         ORDERED = (1 << 30),         \textcolor{comment}{/* Special ordering requirement (Solaris).  */}}
+\DoxyCodeLine{231         EXCLUDE = (1U << 31)         \textcolor{comment}{/* Section is excluded unless referenced or allocated (Solaris).*/}}
+\DoxyCodeLine{232     \};}
+\DoxyCodeLine{233 }
+\DoxyCodeLine{234     \textcolor{keyword}{inline} EElfSectionFlags operator|(EElfSectionFlags a, EElfSectionFlags b)}
+\DoxyCodeLine{235     \{}
+\DoxyCodeLine{236         \textcolor{keywordflow}{return} \textcolor{keyword}{static\_cast<}EElfSectionFlags\textcolor{keyword}{>}(\textcolor{keyword}{static\_cast<}UWord\textcolor{keyword}{>}(a) | \textcolor{keyword}{static\_cast<}UWord\textcolor{keyword}{>}(b));}
+\DoxyCodeLine{237     \}}
+\DoxyCodeLine{238     }
+\DoxyCodeLine{239 \}}
+
+\end{DoxyCode}

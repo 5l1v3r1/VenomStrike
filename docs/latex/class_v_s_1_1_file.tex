@@ -1,0 +1,50 @@
+\hypertarget{class_v_s_1_1_file}{}\doxysection{VS\+::File Class Reference}
+\label{class_v_s_1_1_file}\index{VS::File@{VS::File}}
+Inheritance diagram for VS\+::File\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_v_s_1_1_file}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_v_s_1_1_file_a3c5c7c2f85b63cd24d6295722b73be50}\label{class_v_s_1_1_file_a3c5c7c2f85b63cd24d6295722b73be50}} 
+{\bfseries File} (const std\+::string \&Filepath, EFile\+Type File\+Type, bool Create\+If\+Missing=false)
+\item 
+\mbox{\Hypertarget{class_v_s_1_1_file_a1b3c2f833328770211992822e0a63bf3}\label{class_v_s_1_1_file_a1b3c2f833328770211992822e0a63bf3}} 
+{\bfseries File} (\mbox{\hyperlink{class_v_s_1_1_file}{File}} \&\&)=default
+\item 
+\mbox{\Hypertarget{class_v_s_1_1_file_a55153367fa77187ae7cb84cc2206661d}\label{class_v_s_1_1_file_a55153367fa77187ae7cb84cc2206661d}} 
+\mbox{\hyperlink{class_v_s_1_1_file}{File}} \& {\bfseries operator=} (\mbox{\hyperlink{class_v_s_1_1_file}{File}} \&\&)=default
+\item 
+\mbox{\Hypertarget{class_v_s_1_1_file_a5ac4ac64ae21f6eaeffc87f692bbf0ad}\label{class_v_s_1_1_file_a5ac4ac64ae21f6eaeffc87f692bbf0ad}} 
+std\+::vector$<$ UByte $>$ {\bfseries Read} (size\+\_\+t Bytes)
+\begin{DoxyCompactList}\small\item\em Read a certain amount of bytes from the beginning of the file. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_v_s_1_1_file_a0e50be4ed6cc7e015ab61d8d7b489cd5}\label{class_v_s_1_1_file_a0e50be4ed6cc7e015ab61d8d7b489cd5}} 
+std\+::vector$<$ UByte $>$ {\bfseries Read} (size\+\_\+t From, size\+\_\+t Bytes)
+\begin{DoxyCompactList}\small\item\em Read a certain amount of bytes from a specific byte in the file. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_v_s_1_1_file_ab9651f1a3638b0ec058acd0c14593554}\label{class_v_s_1_1_file_ab9651f1a3638b0ec058acd0c14593554}} 
+Offset64 {\bfseries Find} (size\+\_\+t From, const std\+::vector$<$ UByte $>$ \&Pattern)
+\begin{DoxyCompactList}\small\item\em Find the first occurrence of the specified pattern. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_v_s_1_1_file_a7ef60e4c4f74be1c61a794802e11a6ab}\label{class_v_s_1_1_file_a7ef60e4c4f74be1c61a794802e11a6ab}} 
+size\+\_\+t {\bfseries Get\+File\+Size} ()
+\item 
+\mbox{\Hypertarget{class_v_s_1_1_file_aae64bf45bcb395868f95575fa552b1fb}\label{class_v_s_1_1_file_aae64bf45bcb395868f95575fa552b1fb}} 
+virtual const std\+::string \& {\bfseries Get\+File\+Path} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_v_s_1_1_file_a0ff40ec527d993648a4857dea498ba4f}\label{class_v_s_1_1_file_a0ff40ec527d993648a4857dea498ba4f}} 
+static bool {\bfseries Exists} (const std\+::string \&File\+Path)
+\item 
+\mbox{\Hypertarget{class_v_s_1_1_file_a134d7bf6ce24d39613a9b507bb1f6773}\label{class_v_s_1_1_file_a134d7bf6ce24d39613a9b507bb1f6773}} 
+static std\+::string {\bfseries Parse\+Filename} (const std\+::string \&File\+Path)
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Framework/\+Source/\+Core/File.\+h\item 
+Framework/\+Source/\+Core/File.\+cpp\end{DoxyCompactItemize}

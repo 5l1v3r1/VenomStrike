@@ -1,0 +1,21 @@
+\hypertarget{_elf_defines_8h_source}{}\doxysection{Elf\+Defines.\+h}
+\label{_elf_defines_8h_source}\index{Framework/Source/Core/FileFormats/ELF/ElfDefines.h@{Framework/Source/Core/FileFormats/ELF/ElfDefines.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <Core/Defines.h>}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{comment}{/* Type of file offsets.  */}}
+\DoxyCodeLine{6 \textcolor{keyword}{using} ElfOffset32 = UWord;}
+\DoxyCodeLine{7 \textcolor{keyword}{using} ElfOffset64 = UDoubleWord;}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{comment}{/* Type for section indices, which are 16-\/bit quantities.  */}}
+\DoxyCodeLine{10 \textcolor{keyword}{using} ElfSectionIndex32 = UHalfWord;}
+\DoxyCodeLine{11 \textcolor{keyword}{using} ElfSectionIndex64 = UHalfWord;}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{comment}{/* Type for version symbol information.  */}}
+\DoxyCodeLine{14 \textcolor{keyword}{using} ElfVersym32 = UHalfWord;}
+\DoxyCodeLine{15 \textcolor{keyword}{using} ElfVersym64 = UHalfWord;}
+
+\end{DoxyCode}
