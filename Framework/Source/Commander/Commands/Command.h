@@ -9,6 +9,10 @@
 
 namespace VS
 {
+	/// Parent class for commands.
+	/// The Execute() method must be implemented in all child classes. 
+	/// It has not been marked as pure virtual in order to allow general command handling through this parent class.
+	/// Commands should return an error message in the Result object if their execution was unsuccessful.
 	class Command
 	{
 	public:
@@ -16,15 +20,16 @@ namespace VS
 		static const std::string& GetMnemonic() { return Mnemonic; }
 		static constexpr uint8_t GetMinimumRequiredParams() { return MinNumberOfParameters; }
 		static const std::string& GetBasicHelp() { return BasicHelp; }
-		//! void should be some type of error handling
-		virtual Result Execute() { return Result{ EResult::Ok }; }
+		
+		//! Executes the command, must be implemented in all child classes.
+		virtual Result Execute() { return Result{ EResult::GenericError, "You must use a specific instance of the Command class."}; }
 	protected:
 		static const std::string Mnemonic;
-		// The minimum number of required parameters excluding the command name
+		//! The minimum number of required parameters excluding the command name.
 		static constexpr uint8_t MinNumberOfParameters = 0;
-		// The command's mnemonic is always the first parameter (located at index 0)
+		//! The command's mnemonic is always the first parameter (located at index 0).
 		std::vector<std::string> Parameters;
-
+		//! A basic message that is used by the "help" command when listing all available commands.
 		static const std::string BasicHelp;
 	};
 }

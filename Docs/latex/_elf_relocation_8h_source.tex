@@ -1,0 +1,143 @@
+\hypertarget{_elf_relocation_8h_source}{}\doxysection{Elf\+Relocation.\+h}
+\label{_elf_relocation_8h_source}\index{Framework/Source/Core/FileFormats/ELF/ElfComponents/ElfRelocation.h@{Framework/Source/Core/FileFormats/ELF/ElfComponents/ElfRelocation.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <Core/FileFormats/ELF/ElfDefines.h>}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{keyword}{namespace }VS}
+\DoxyCodeLine{6 \{}
+\DoxyCodeLine{8     \textcolor{keyword}{struct }\mbox{\hyperlink{struct_v_s_1_1_elf_rel32}{ElfRel32}}}
+\DoxyCodeLine{9     \{}
+\DoxyCodeLine{10         Address32 Offset; \textcolor{comment}{/* Address */}}
+\DoxyCodeLine{11         UWord Info;       \textcolor{comment}{/* Relocation type and symbol index */}}
+\DoxyCodeLine{12     \};}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{15     \textcolor{keyword}{struct }\mbox{\hyperlink{struct_v_s_1_1_elf_rel64}{ElfRel64}}}
+\DoxyCodeLine{16     \{}
+\DoxyCodeLine{17         Address64 Offset; \textcolor{comment}{/* Address */}}
+\DoxyCodeLine{18         UDoubleWord Info; \textcolor{comment}{/* Relocation type and symbol index */}}
+\DoxyCodeLine{19     \};}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{22     \textcolor{keyword}{struct }\mbox{\hyperlink{struct_v_s_1_1_elf_rela32}{ElfRela32}}}
+\DoxyCodeLine{23     \{}
+\DoxyCodeLine{24         Address32 Offset; \textcolor{comment}{/* Address */}}
+\DoxyCodeLine{25         UWord Info;       \textcolor{comment}{/* Relocation type and symbol index */}}
+\DoxyCodeLine{26         SWord Addend;     \textcolor{comment}{/* Addend */}}
+\DoxyCodeLine{27     \};}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{30     \textcolor{keyword}{struct }\mbox{\hyperlink{struct_v_s_1_1_elf_rela64}{ElfRela64}}}
+\DoxyCodeLine{31     \{}
+\DoxyCodeLine{32         Address64 Offset;   \textcolor{comment}{/* Address */}}
+\DoxyCodeLine{33         UDoubleWord Info;   \textcolor{comment}{/* Relocation type and symbol index */}}
+\DoxyCodeLine{34         SDoubleWord Addend; \textcolor{comment}{/* Addend */}}
+\DoxyCodeLine{35     \};}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{38     \textcolor{keyword}{enum class} EElfI386RelocationType : UWord}
+\DoxyCodeLine{39     \{}
+\DoxyCodeLine{40         I386\_NONE = 0,     \textcolor{comment}{/* No reloc */}}
+\DoxyCodeLine{41         I386\_32 = 1,       \textcolor{comment}{/* Direct 32 bit  */}}
+\DoxyCodeLine{42         I386\_PC32 = 2,     \textcolor{comment}{/* PC relative 32 bit */}}
+\DoxyCodeLine{43         I386\_GOT32 = 3,    \textcolor{comment}{/* 32 bit GOT entry */}}
+\DoxyCodeLine{44         I386\_PLT32 = 4,    \textcolor{comment}{/* 32 bit PLT address */}}
+\DoxyCodeLine{45         I386\_COPY = 5,     \textcolor{comment}{/* Copy symbol at runtime */}}
+\DoxyCodeLine{46         I386\_GLOB\_DAT = 6, \textcolor{comment}{/* Create GOT entry */}}
+\DoxyCodeLine{47         I386\_JMP\_SLOT = 7, \textcolor{comment}{/* Create PLT entry */}}
+\DoxyCodeLine{48         I386\_RELATIVE = 8, \textcolor{comment}{/* Adjust by program base */}}
+\DoxyCodeLine{49         I386\_GOTOFF = 9,   \textcolor{comment}{/* 32 bit offset to GOT */}}
+\DoxyCodeLine{50         I386\_GOTPC = 10,   \textcolor{comment}{/* 32 bit PC relative offset to GOT */}}
+\DoxyCodeLine{51         I386\_32PLT = 11,}
+\DoxyCodeLine{52         I386\_TLS\_TPOFF = 14, \textcolor{comment}{/* Offset in static TLS block */}}
+\DoxyCodeLine{53         I386\_TLS\_IE = 15,    \textcolor{comment}{/* Address of GOT entry for static TLS block offset */}}
+\DoxyCodeLine{54         I386\_TLS\_GOTIE = 16, \textcolor{comment}{/* GOT entry for static TLS block offset */}}
+\DoxyCodeLine{55         I386\_TLS\_LE = 17,    \textcolor{comment}{/* Offset relative to static TLS block */}}
+\DoxyCodeLine{56         I386\_TLS\_GD = 18,    \textcolor{comment}{/* Direct 32 bit for GNU version of general dynamic thread local data */}}
+\DoxyCodeLine{57         I386\_TLS\_LDM = 19,   \textcolor{comment}{/* Direct 32 bit for GNU version of local dynamic thread local data in LE code */}}
+\DoxyCodeLine{58         I386\_16 = 20,}
+\DoxyCodeLine{59         I386\_PC16 = 21,}
+\DoxyCodeLine{60         I386\_8 = 22,}
+\DoxyCodeLine{61         I386\_PC8 = 23,}
+\DoxyCodeLine{62         I386\_TLS\_GD\_32 = 24,     \textcolor{comment}{/* Direct 32 bit for general dynamic thread local data */}}
+\DoxyCodeLine{63         I386\_TLS\_GD\_PUSH = 25,   \textcolor{comment}{/* Tag for pushl in GD TLS code */}}
+\DoxyCodeLine{64         I386\_TLS\_GD\_CALL = 26,   \textcolor{comment}{/* Relocation for call to \_\_tls\_get\_addr() */}}
+\DoxyCodeLine{65         I386\_TLS\_GD\_POP = 27,    \textcolor{comment}{/* Tag for popl in GD TLS code */}}
+\DoxyCodeLine{66         I386\_TLS\_LDM\_32 = 28,    \textcolor{comment}{/* Direct 32 bit for local dynamic thread local data in LE code */}}
+\DoxyCodeLine{67         I386\_TLS\_LDM\_PUSH = 29,  \textcolor{comment}{/* Tag for pushl in LDM TLS code */}}
+\DoxyCodeLine{68         I386\_TLS\_LDM\_CALL = 30,  \textcolor{comment}{/* Relocation for call to \_\_tls\_get\_addr() in LDM code */}}
+\DoxyCodeLine{69         I386\_TLS\_LDM\_POP = 31,   \textcolor{comment}{/* Tag for popl in LDM TLS code */}}
+\DoxyCodeLine{70         I386\_TLS\_LDO\_32 = 32,    \textcolor{comment}{/* Offset relative to TLS block */}}
+\DoxyCodeLine{71         I386\_TLS\_IE\_32 = 33,     \textcolor{comment}{/* GOT entry for negated static TLS block offset */}}
+\DoxyCodeLine{72         I386\_TLS\_LE\_32 = 34,     \textcolor{comment}{/* Negated offset relative to static TLS block */}}
+\DoxyCodeLine{73         I386\_TLS\_DTPMOD32 = 35,  \textcolor{comment}{/* ID of module containing symbol */}}
+\DoxyCodeLine{74         I386\_TLS\_DTPOFF32 = 36,  \textcolor{comment}{/* Offset in TLS block */}}
+\DoxyCodeLine{75         I386\_TLS\_TPOFF32 = 37,   \textcolor{comment}{/* Negated offset in static TLS block */}}
+\DoxyCodeLine{76         I386\_SIZE32 = 38,        \textcolor{comment}{/* 32-\/bit symbol size */}}
+\DoxyCodeLine{77         I386\_TLS\_GOTDESC = 39,   \textcolor{comment}{/* GOT offset for TLS descriptor.  */}}
+\DoxyCodeLine{78         I386\_TLS\_DESC\_CALL = 40, \textcolor{comment}{/* Marker of call through TLS descriptor for relaxation.  */}}
+\DoxyCodeLine{79         I386\_TLS\_DESC = 41,      \textcolor{comment}{/* TLS descriptor containing pointer to code and to argument, returning the TLS offset for the symbol.  */}}
+\DoxyCodeLine{80         I386\_IRELATIVE = 42,     \textcolor{comment}{/* Adjust indirectly by program base */}}
+\DoxyCodeLine{81         I386\_GOT32X = 43,        \textcolor{comment}{// Load from 32 bit GOT entry, relaxable.}}
+\DoxyCodeLine{82                                  \textcolor{comment}{/* Keep this the last entry.  */}}
+\DoxyCodeLine{83         I386\_NUM = 44,}
+\DoxyCodeLine{84     \};}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{87     \textcolor{keyword}{enum class} EElfAmd64RelocationType : UWord}
+\DoxyCodeLine{88     \{}
+\DoxyCodeLine{89         NONE = 0,             \textcolor{comment}{/* No reloc */}}
+\DoxyCodeLine{90         \_64 = 1,              \textcolor{comment}{/* Direct 64 bit  */}}
+\DoxyCodeLine{91         PC32 = 2,             \textcolor{comment}{/* PC relative 32 bit signed */}}
+\DoxyCodeLine{92         GOT32 = 3,            \textcolor{comment}{/* 32 bit GOT entry */}}
+\DoxyCodeLine{93         PLT32 = 4,            \textcolor{comment}{/* 32 bit PLT address */}}
+\DoxyCodeLine{94         COPY = 5,             \textcolor{comment}{/* Copy symbol at runtime */}}
+\DoxyCodeLine{95         GLOB\_DAT = 6,         \textcolor{comment}{/* Create GOT entry */}}
+\DoxyCodeLine{96         JUMP\_SLOT = 7,        \textcolor{comment}{/* Create PLT entry */}}
+\DoxyCodeLine{97         RELATIVE = 8,         \textcolor{comment}{/* Adjust by program base */}}
+\DoxyCodeLine{98         GOTPCREL = 9,         \textcolor{comment}{/* 32 bit signed PC relative offset to GOT */}}
+\DoxyCodeLine{99         \_32 = 10,             \textcolor{comment}{/* Direct 32 bit zero extended */}}
+\DoxyCodeLine{100         \_32S = 11,            \textcolor{comment}{/* Direct 32 bit sign extended */}}
+\DoxyCodeLine{101         \_16 = 12,             \textcolor{comment}{/* Direct 16 bit zero extended */}}
+\DoxyCodeLine{102         PC16 = 13,            \textcolor{comment}{/* 16 bit sign extended pc relative */}}
+\DoxyCodeLine{103         \_8 = 14,              \textcolor{comment}{/* Direct 8 bit sign extended  */}}
+\DoxyCodeLine{104         PC8 = 15,             \textcolor{comment}{/* 8 bit sign extended pc relative */}}
+\DoxyCodeLine{105         DTPMOD64 = 16,        \textcolor{comment}{/* ID of module containing symbol */}}
+\DoxyCodeLine{106         DTPOFF64 = 17,        \textcolor{comment}{/* Offset in module's TLS block */}}
+\DoxyCodeLine{107         TPOFF64 = 18,         \textcolor{comment}{/* Offset in initial TLS block */}}
+\DoxyCodeLine{108         TLSGD = 19,           \textcolor{comment}{/* 32 bit signed PC relative offset to two GOT entries for GD symbol */}}
+\DoxyCodeLine{109         TLSLD = 20,           \textcolor{comment}{/* 32 bit signed PC relative offset to two GOT entries for LD symbol */}}
+\DoxyCodeLine{110         DTPOFF32 = 21,        \textcolor{comment}{/* Offset in TLS block */}}
+\DoxyCodeLine{111         GOTTPOFF = 22,        \textcolor{comment}{/* 32 bit signed PC relative offset to GOT entry for IE symbol */}}
+\DoxyCodeLine{112         TPOFF32 = 23,         \textcolor{comment}{/* Offset in initial TLS block */}}
+\DoxyCodeLine{113         PC64 = 24,            \textcolor{comment}{/* PC relative 64 bit */}}
+\DoxyCodeLine{114         GOTOFF64 = 25,        \textcolor{comment}{/* 64 bit offset to GOT */}}
+\DoxyCodeLine{115         GOTPC32 = 26,         \textcolor{comment}{/* 32 bit signed pc relative offset to GOT */}}
+\DoxyCodeLine{116         GOT64 = 27,           \textcolor{comment}{/* 64-\/bit GOT entry offset */}}
+\DoxyCodeLine{117         GOTPCREL64 = 28,      \textcolor{comment}{/* 64-\/bit PC relative offset to GOT entry */}}
+\DoxyCodeLine{118         GOTPC64 = 29,         \textcolor{comment}{/* 64-\/bit PC relative offset to GOT */}}
+\DoxyCodeLine{119         GOTPLT64 = 30,        \textcolor{comment}{/* like GOT64, says PLT entry needed */}}
+\DoxyCodeLine{120         PLTOFF64 = 31,        \textcolor{comment}{/* 64-\/bit GOT relative offset to PLT entry */}}
+\DoxyCodeLine{121         SIZE32 = 32,          \textcolor{comment}{/* Size of symbol plus 32-\/bit addend */}}
+\DoxyCodeLine{122         SIZE64 = 33,          \textcolor{comment}{/* Size of symbol plus 64-\/bit addend */}}
+\DoxyCodeLine{123         GOTPC32\_TLSDESC = 34, \textcolor{comment}{/* GOT offset for TLS descriptor.  */}}
+\DoxyCodeLine{124         TLSDESC\_CALL = 35,    \textcolor{comment}{/* Marker for call through TLS descriptor.  */}}
+\DoxyCodeLine{125         TLSDESC = 36,         \textcolor{comment}{/* TLS descriptor.  */}}
+\DoxyCodeLine{126         IRELATIVE = 37,       \textcolor{comment}{/* Adjust indirectly by program base */}}
+\DoxyCodeLine{127         RELATIVE64 = 38,      \textcolor{comment}{/* 64-\/bit adjust by program base */}}
+\DoxyCodeLine{128         \textcolor{comment}{// 39 Reserved was R\_X86\_64\_PC32\_BND }}
+\DoxyCodeLine{129         \textcolor{comment}{// 40 Reserved was R\_X86\_64\_PLT32\_BND}}
+\DoxyCodeLine{130         GOTPCRELX = 41,     \textcolor{comment}{/* Load from 32 bit signed pc relative offset to GOT entry without REX prefix, relaxable.  */}}
+\DoxyCodeLine{131         REX\_GOTPCRELX = 42, \textcolor{comment}{/* Load from 32 bit signed pc relative offset to GOT entry with REX prefix, relaxable.  */}}
+\DoxyCodeLine{132         NUM = 43}
+\DoxyCodeLine{133     \};}
+\DoxyCodeLine{134 \}}
+\DoxyCodeLine{135 \textcolor{comment}{/* How to extract and insert information held in the Info field.  */}}
+\DoxyCodeLine{136 }
+\DoxyCodeLine{137 \textcolor{preprocessor}{\#define ELF32\_R\_SYM(val) ((val) >> 8)}}
+\DoxyCodeLine{138 \textcolor{preprocessor}{\#define ELF32\_R\_TYPE(val) ((val)\&0xff)}}
+\DoxyCodeLine{139 \textcolor{preprocessor}{\#define ELF32\_R\_INFO(sym, type) (((sym) << 8) + ((type)\&0xff))}}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141 \textcolor{preprocessor}{\#define ELF64\_R\_SYM(i) ((i) >> 32)}}
+\DoxyCodeLine{142 \textcolor{preprocessor}{\#define ELF64\_R\_TYPE(i) ((i)\&0xffffffff)}}
+\DoxyCodeLine{143 \textcolor{preprocessor}{\#define ELF64\_R\_INFO(sym, type) ((((Elf64\_Xword)(sym)) << 32) + (type))}}
+
+\end{DoxyCode}

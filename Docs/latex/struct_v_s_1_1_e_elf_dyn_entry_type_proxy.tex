@@ -1,0 +1,129 @@
+\hypertarget{struct_v_s_1_1_e_elf_dyn_entry_type_proxy}{}\doxysection{VS\+::EElf\+Dyn\+Entry\+Type\+Proxy\texorpdfstring{$<$}{<} Arch \texorpdfstring{$>$}{>} Struct Template Reference}
+\label{struct_v_s_1_1_e_elf_dyn_entry_type_proxy}\index{VS::EElfDynEntryTypeProxy$<$ Arch $>$@{VS::EElfDynEntryTypeProxy$<$ Arch $>$}}
+
+
+Legal values for dynamic entry type (Type). ~\newline
+  
+
+
+
+
+{\ttfamily \#include $<$Elf\+Section.\+h$>$}
+
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{struct_v_s_1_1_e_elf_dyn_entry_type_proxy_a60a7295258406b7579afee18cc7ad7bd}\label{struct_v_s_1_1_e_elf_dyn_entry_type_proxy_a60a7295258406b7579afee18cc7ad7bd}} 
+enum class {\bfseries EElf\+Dyn\+Entry\+Type} \+: Arch \{ \newline
+{\bfseries \+\_\+\+NULL} = 0
+, {\bfseries NEEDED} = 1
+, {\bfseries PLTRELSZ} = 2
+, {\bfseries PLTGOT} = 3
+, \newline
+{\bfseries HASH} = 4
+, {\bfseries STRTAB} = 5
+, {\bfseries SYMTAB} = 6
+, {\bfseries RELA} = 7
+, \newline
+{\bfseries RELASZ} = 8
+, {\bfseries RELAENT} = 9
+, {\bfseries STRSZ} = 10
+, {\bfseries SYMENT} = 11
+, \newline
+{\bfseries INIT} = 12
+, {\bfseries FINI} = 13
+, {\bfseries SONAME} = 14
+, {\bfseries RPATH} = 15
+, \newline
+{\bfseries SYMBOLIC} = 16
+, {\bfseries REL} = 17
+, {\bfseries RELSZ} = 18
+, {\bfseries RELENT} = 19
+, \newline
+{\bfseries PLTREL} = 20
+, {\bfseries DEBUG} = 21
+, {\bfseries TEXTREL} = 22
+, {\bfseries JMPREL} = 23
+, \newline
+{\bfseries BIND\+\_\+\+NOW} = 24
+, {\bfseries INIT\+\_\+\+ARRAY} = 25
+, {\bfseries FINI\+\_\+\+ARRAY} = 26
+, {\bfseries NIT\+\_\+\+ARRAYSZ} = 27
+, \newline
+{\bfseries FINI\+\_\+\+ARRAYSZ} = 28
+, {\bfseries RUNPATH} = 29
+, {\bfseries FLAGS} = 30
+, {\bfseries ENCODING} = 32
+, \newline
+{\bfseries PREINIT\+\_\+\+ARRAY} = 32
+, {\bfseries PREINIT\+\_\+\+ARRAYSZ} = 33
+, {\bfseries SYMTAB\+\_\+\+SHNDX} = 34
+, {\bfseries NUM} = 35
+, \newline
+{\bfseries LOOS} = 0x6000000d
+, {\bfseries HIOS} = 0x6ffff000
+, {\bfseries LOPROC} = 0x70000000
+, {\bfseries HIPROC} = 0x7fffffff
+, \newline
+{\bfseries PROCNUM} = 0x37
+, {\bfseries VALRNGLO} = 0x6ffffd00
+, {\bfseries GNU\+\_\+\+PRELINKED} = 0x6ffffdf5
+, {\bfseries GNU\+\_\+\+CONFLICTSZ} = 0x6ffffdf6
+, \newline
+{\bfseries GNU\+\_\+\+LIBLISTSZ} = 0x6ffffdf7
+, {\bfseries CHECKSUM} = 0x6ffffdf8
+, {\bfseries PLTPADSZ} = 0x6ffffdf9
+, {\bfseries MOVEENT} = 0x6ffffdfa
+, \newline
+{\bfseries MOVESZ} = 0x6ffffdfb
+, {\bfseries FEATURE\+\_\+1} = 0x6ffffdfc
+, {\bfseries POSFLAG\+\_\+1} = 0x6ffffdfd
+, {\bfseries SYMINSZ} = 0x6ffffdfe
+, \newline
+{\bfseries SYMINENT} = 0x6ffffdff
+, {\bfseries VALRNGHI} = 0x6ffffdff
+, {\bfseries VALNUM} = 12
+, {\bfseries ADDRRNGLO} = 0x6ffffe00
+, \newline
+{\bfseries GNU\+\_\+\+HASH} = 0x6ffffef5
+, {\bfseries TLSDESC\+\_\+\+PLT} = 0x6ffffef6
+, {\bfseries TLSDESC\+\_\+\+GOT} = 0x6ffffef7
+, {\bfseries GNU\+\_\+\+CONFLICT} = 0x6ffffef8
+, \newline
+{\bfseries GNU\+\_\+\+LIBLIST} = 0x6ffffef9
+, {\bfseries CONFIG} = 0x6ffffefa
+, {\bfseries DEPAUDIT} = 0x6ffffefb
+, {\bfseries AUDIT} = 0x6ffffefc
+, \newline
+{\bfseries PLTPAD} = 0x6ffffefd
+, {\bfseries MOVETAB} = 0x6ffffefe
+, {\bfseries SYMINFO} = 0x6ffffeff
+, {\bfseries ADDRRNGHI} = 0x6ffffeff
+, \newline
+{\bfseries ADDRNUM} = 11
+, {\bfseries VERSYM} = 0x6ffffff0
+, {\bfseries RELACOUNT} = 0x6ffffff9
+, {\bfseries RELCOUNT} = 0x6ffffffa
+, \newline
+{\bfseries FLAGS\+\_\+1} = 0x6ffffffb
+, {\bfseries VERDEF} = 0x6ffffffc
+, {\bfseries VERDEFNUM} = 0x6ffffffd
+, {\bfseries VERNEED} = 0x6ffffffe
+, \newline
+{\bfseries VERNEEDNUM} = 0x6fffffff
+, {\bfseries VERSIONTAGNUM} = 16
+ \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$std\+::integral Arch$>$\newline
+struct VS\+::\+EElf\+Dyn\+Entry\+Type\+Proxy$<$ Arch $>$}
+Legal values for dynamic entry type (Type). ~\newline
+ 
+
+Arch must be SWord for 32-\/bit and SDouble\+Word for 64-\/bit 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Framework/\+Source/\+Core/\+File\+Formats/\+ELF/\+Elf\+Components/Elf\+Section.\+h\end{DoxyCompactItemize}

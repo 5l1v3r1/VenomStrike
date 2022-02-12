@@ -1,0 +1,76 @@
+\hypertarget{class_v_s_1_1_command}{}\doxysection{VS\+::Command Class Reference}
+\label{class_v_s_1_1_command}\index{VS::Command@{VS::Command}}
+
+
+{\ttfamily \#include $<$Command.\+h$>$}
+
+Inheritance diagram for VS\+::Command\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_v_s_1_1_command}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_v_s_1_1_command_a50e965c100cf98b09f2e310a2206693c}\label{class_v_s_1_1_command_a50e965c100cf98b09f2e310a2206693c}} 
+{\bfseries Command} (const std\+::vector$<$ std\+::string $>$ \&\mbox{\hyperlink{class_v_s_1_1_command_a7a7568a9c5882980471e9e7f354b3e8c}{Parameters}})
+\item 
+virtual \mbox{\hyperlink{struct_v_s_1_1_result}{Result}} \mbox{\hyperlink{class_v_s_1_1_command_acff02768fee0e06947f40546df690384}{Execute}} ()
+\begin{DoxyCompactList}\small\item\em Executes the command, must be implemented in all child classes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_v_s_1_1_command_ab151eb1256d81fde21dcd14210cf1bf7}\label{class_v_s_1_1_command_ab151eb1256d81fde21dcd14210cf1bf7}} 
+static const std\+::string \& {\bfseries Get\+Mnemonic} ()
+\item 
+\mbox{\Hypertarget{class_v_s_1_1_command_a08fa8c890078ff3a80fba4750adfea5e}\label{class_v_s_1_1_command_a08fa8c890078ff3a80fba4750adfea5e}} 
+static constexpr uint8\+\_\+t {\bfseries Get\+Minimum\+Required\+Params} ()
+\item 
+\mbox{\Hypertarget{class_v_s_1_1_command_a0ada8a3240a1901fa6e9865946114f1d}\label{class_v_s_1_1_command_a0ada8a3240a1901fa6e9865946114f1d}} 
+static const std\+::string \& {\bfseries Get\+Basic\+Help} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_v_s_1_1_command_a7a7568a9c5882980471e9e7f354b3e8c}\label{class_v_s_1_1_command_a7a7568a9c5882980471e9e7f354b3e8c}} 
+std\+::vector$<$ std\+::string $>$ {\bfseries Parameters}
+\begin{DoxyCompactList}\small\item\em The command\textquotesingle{}s mnemonic is always the first parameter (located at index 0). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_v_s_1_1_command_a87d0c4af8eb6e25b29cfbc985cf154cb}\label{class_v_s_1_1_command_a87d0c4af8eb6e25b29cfbc985cf154cb}} 
+static const std\+::string {\bfseries Mnemonic} = \char`\"{}\char`\"{}
+\item 
+\mbox{\Hypertarget{class_v_s_1_1_command_a44c5ddd8eb2bc8e0e62993992340914f}\label{class_v_s_1_1_command_a44c5ddd8eb2bc8e0e62993992340914f}} 
+static constexpr uint8\+\_\+t {\bfseries Min\+Number\+Of\+Parameters} = 0
+\begin{DoxyCompactList}\small\item\em The minimum number of required parameters excluding the command name. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_v_s_1_1_command_afcadd79bb38bcc57396d004cc3a0c157}\label{class_v_s_1_1_command_afcadd79bb38bcc57396d004cc3a0c157}} 
+static const std\+::string {\bfseries Basic\+Help} = \char`\"{}\char`\"{}
+\begin{DoxyCompactList}\small\item\em A basic message that is used by the \char`\"{}help\char`\"{} command when listing all available commands. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Parent class for commands. The \mbox{\hyperlink{class_v_s_1_1_command_acff02768fee0e06947f40546df690384}{Execute()}} method must be implemented in all child classes. It has not been marked as pure virtual in order to allow general command handling through this parent class. Commands should return an error message in the \mbox{\hyperlink{struct_v_s_1_1_result}{Result}} object if their execution was unsuccessful. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_v_s_1_1_command_acff02768fee0e06947f40546df690384}\label{class_v_s_1_1_command_acff02768fee0e06947f40546df690384}} 
+\index{VS::Command@{VS::Command}!Execute@{Execute}}
+\index{Execute@{Execute}!VS::Command@{VS::Command}}
+\doxysubsubsection{\texorpdfstring{Execute()}{Execute()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{struct_v_s_1_1_result}{Result}} VS\+::\+Command\+::\+Execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Executes the command, must be implemented in all child classes. 
+
+
+
+Reimplemented in \mbox{\hyperlink{class_v_s_1_1_help_command_a24a345c0a42bf65e631c7fc93b593be1}{VS\+::\+Help\+Command}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Framework/\+Source/\+Commander/\+Commands/Command.\+h\item 
+Framework/\+Source/\+Commander/\+Commands/Command.\+cpp\end{DoxyCompactItemize}

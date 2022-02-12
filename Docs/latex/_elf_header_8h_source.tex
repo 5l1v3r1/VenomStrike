@@ -1,0 +1,291 @@
+\hypertarget{_elf_header_8h_source}{}\doxysection{Elf\+Header.\+h}
+\label{_elf_header_8h_source}\index{Framework/Source/Core/FileFormats/ELF/ElfComponents/ElfHeader.h@{Framework/Source/Core/FileFormats/ELF/ElfComponents/ElfHeader.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <Core/FileFormats/ELF/ElfDefines.h>}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{comment}{/* Fields in the ElfIdentifier array.  The EI\_* macros are indices into the}}
+\DoxyCodeLine{6 \textcolor{comment}{   array.  The macros under each EI\_* macro are the values the byte}}
+\DoxyCodeLine{7 \textcolor{comment}{   may have.  */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#define EI\_MAG0     0       }\textcolor{comment}{/* File identification byte 0 index */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#define EI\_MAG1     1       }\textcolor{comment}{/* File identification byte 1 index */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#define EI\_MAG2     2       }\textcolor{comment}{/* File identification byte 2 index */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define EI\_MAG3     3       }\textcolor{comment}{/* File identification byte 3 index */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#define EI\_CLASS    4       }\textcolor{comment}{/* File class byte index */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#define EI\_DATA     5       }\textcolor{comment}{/* Data encoding byte index */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#define EI\_VERSION  6       }\textcolor{comment}{/* File version byte index */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{17                     \textcolor{comment}{/* Value must be EV\_CURRENT */}}
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#define EI\_NIDENT (16)}}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20 \textcolor{keyword}{namespace }VS}
+\DoxyCodeLine{21 \{}
+\DoxyCodeLine{22     \textcolor{keyword}{enum class} EElfType : UHalfWord;}
+\DoxyCodeLine{23     \textcolor{keyword}{enum class} EElfArch : UHalfWord;}
+\DoxyCodeLine{24     \textcolor{keyword}{enum class} EElfVersion : UWord;}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26     \textcolor{keyword}{static} \textcolor{keyword}{constexpr} std::array<UByte, 4> ElfMagic = \{ 0x7f, 0x45, 0x4c, 0x46 \}; \textcolor{comment}{// Elf magic bytes}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28     \textcolor{comment}{// Elf Headers}}
+\DoxyCodeLine{29     \textcolor{keyword}{struct }\mbox{\hyperlink{struct_v_s_1_1_elf_header32}{ElfHeader32}}}
+\DoxyCodeLine{30     \{}
+\DoxyCodeLine{31         UByte ElfIdentifier[EI\_NIDENT];       \textcolor{comment}{/* Magic number and other info */}}
+\DoxyCodeLine{32         EElfType Type;                        \textcolor{comment}{/* Object file type */}}
+\DoxyCodeLine{33         EElfArch Arch;                        \textcolor{comment}{/* Architecture */}}
+\DoxyCodeLine{34         EElfVersion Version;                  \textcolor{comment}{/* Object file version */}}
+\DoxyCodeLine{35         Address32 EntryPoint;                 \textcolor{comment}{/* Entry point virtual address */}}
+\DoxyCodeLine{36         ElfOffset32 ProgramHeaderTableOffset; \textcolor{comment}{/* Program header table file offset */}}
+\DoxyCodeLine{37         ElfOffset32 SectionHeaderTableOffset; \textcolor{comment}{/* Section header table file offset */}}
+\DoxyCodeLine{38         UWord Flags;                          \textcolor{comment}{/* Processor-\/specific flags */}}
+\DoxyCodeLine{39         UHalfWord Size;                       \textcolor{comment}{/* ELF header size in bytes */}}
+\DoxyCodeLine{40         UHalfWord ProgramHeaderSize;          \textcolor{comment}{/* Program header table entry size */}}
+\DoxyCodeLine{41         UHalfWord ProgramHeaderCount;         \textcolor{comment}{/* Program header table entry count */}}
+\DoxyCodeLine{42         UHalfWord SectionHeaderSize;          \textcolor{comment}{/* Section header table entry size */}}
+\DoxyCodeLine{43         UHalfWord SectionHeaderCount;         \textcolor{comment}{/* Section header table entry count */}}
+\DoxyCodeLine{44         UHalfWord StringTableIndex;           \textcolor{comment}{/* Section header string table index */}}
+\DoxyCodeLine{45     \};}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     \textcolor{keyword}{struct }\mbox{\hyperlink{struct_v_s_1_1_elf_header64}{ElfHeader64}}}
+\DoxyCodeLine{48     \{}
+\DoxyCodeLine{49         UByte ElfIdentifier[EI\_NIDENT];       \textcolor{comment}{/* Magic number and other info */}}
+\DoxyCodeLine{50         EElfType Type;                        \textcolor{comment}{/* Object file type */}}
+\DoxyCodeLine{51         EElfArch Arch;                        \textcolor{comment}{/* Architecture */}}
+\DoxyCodeLine{52         EElfVersion Version;                  \textcolor{comment}{/* Object file version */}}
+\DoxyCodeLine{53         Address64 EntryPoint;                 \textcolor{comment}{/* Entry point virtual address */}}
+\DoxyCodeLine{54         ElfOffset64 ProgramHeaderTableOffset; \textcolor{comment}{/* Program header table file offset */}}
+\DoxyCodeLine{55         ElfOffset64 SectionHeaderTableOffset; \textcolor{comment}{/* Section header table file offset */}}
+\DoxyCodeLine{56         UWord Flags;                          \textcolor{comment}{/* Processor-\/specific flags */}}
+\DoxyCodeLine{57         UHalfWord Size;                       \textcolor{comment}{/* ELF header size in bytes */}}
+\DoxyCodeLine{58         UHalfWord ProgramHeaderSize;          \textcolor{comment}{/* Program header table entry size */}}
+\DoxyCodeLine{59         UHalfWord ProgramHeaderCount;         \textcolor{comment}{/* Program header table entry count */}}
+\DoxyCodeLine{60         UHalfWord SectionHeaderSize;          \textcolor{comment}{/* Section header table entry size */}}
+\DoxyCodeLine{61         UHalfWord SectionHeaderCount;         \textcolor{comment}{/* Section header table entry count */}}
+\DoxyCodeLine{62         UHalfWord StringTableIndex;           \textcolor{comment}{/* Section header string table index */}}
+\DoxyCodeLine{63     \};}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65     \textcolor{comment}{/* Legal values for ELF Type (object file type).  */}}
+\DoxyCodeLine{66     \textcolor{keyword}{enum class} EElfType : UHalfWord}
+\DoxyCodeLine{67     \{}
+\DoxyCodeLine{68         NONE = 0,        \textcolor{comment}{// No file type}}
+\DoxyCodeLine{69         REL = 1,         \textcolor{comment}{// Relocatable file}}
+\DoxyCodeLine{70         EXEC = 2,        \textcolor{comment}{// Executable file}}
+\DoxyCodeLine{71         DYN = 3,         \textcolor{comment}{// Shared object file}}
+\DoxyCodeLine{72         CORE = 4,        \textcolor{comment}{// Core file}}
+\DoxyCodeLine{73         NUM = 5,         \textcolor{comment}{// Number of defined types}}
+\DoxyCodeLine{74         LOOS = 0xfe00,   \textcolor{comment}{// OS-\/specific range start}}
+\DoxyCodeLine{75         HIOS = 0xfeff,   \textcolor{comment}{// OS-\/specific range end}}
+\DoxyCodeLine{76         LOPROC = 0xff00, \textcolor{comment}{// Processor-\/specific range start}}
+\DoxyCodeLine{77         HIPROC = 0xffff  \textcolor{comment}{// Processor-\/specific range end}}
+\DoxyCodeLine{78     \};}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80     \textcolor{comment}{/* Legal values for ELF Arch (architecture).  */}}
+\DoxyCodeLine{81     \textcolor{keyword}{enum class} EElfArch : UHalfWord}
+\DoxyCodeLine{82     \{}
+\DoxyCodeLine{83         NONE = 0,         \textcolor{comment}{// No machine */}}
+\DoxyCodeLine{84         M32 = 1,          \textcolor{comment}{// AT\&T WE 32100 */}}
+\DoxyCodeLine{85         SPARC = 2,        \textcolor{comment}{// SUN SPARC */}}
+\DoxyCodeLine{86         I386 = 3,         \textcolor{comment}{// Intel 80386 */}}
+\DoxyCodeLine{87         M68K = 4,         \textcolor{comment}{// Motorola m68k family */}}
+\DoxyCodeLine{88         M88K = 5,         \textcolor{comment}{// Motorola m88k family */}}
+\DoxyCodeLine{89         IAMCU = 6,        \textcolor{comment}{// Intel MCU */}}
+\DoxyCodeLine{90         I860 = 7,         \textcolor{comment}{// Intel 80860 */}}
+\DoxyCodeLine{91         MIPS = 8,         \textcolor{comment}{// MIPS R3000 big-\/endian */}}
+\DoxyCodeLine{92         S370 = 9,         \textcolor{comment}{// IBM System/370 */}}
+\DoxyCodeLine{93         MIPS\_RS3\_LE = 10, \textcolor{comment}{// MIPS R3000 little-\/endian */}}
+\DoxyCodeLine{94         \textcolor{comment}{// reserved 11-\/14}}
+\DoxyCodeLine{95         PARISC = 15, \textcolor{comment}{// HPPA }}
+\DoxyCodeLine{96         \textcolor{comment}{// reserved 16 }}
+\DoxyCodeLine{97         VPP500 = 17,        \textcolor{comment}{// Fujitsu VPP500 */}}
+\DoxyCodeLine{98         SPARC32PLUS = 18,   \textcolor{comment}{// Sun's "{}v8plus"{} */}}
+\DoxyCodeLine{99         I960 = 19,          \textcolor{comment}{// Intel 80960 */}}
+\DoxyCodeLine{100         PPC = 20,           \textcolor{comment}{// PowerPC */}}
+\DoxyCodeLine{101         PPC64 = 21,         \textcolor{comment}{// PowerPC 64-\/bit */}}
+\DoxyCodeLine{102         S390 = 22,          \textcolor{comment}{// IBM S390 */}}
+\DoxyCodeLine{103         SPU = 23,           \textcolor{comment}{// IBM SPU/SPC */}}
+\DoxyCodeLine{104                             \textcolor{comment}{// reserved 24-\/35 */}}
+\DoxyCodeLine{105         V800 = 36,          \textcolor{comment}{// NEC V800 series */}}
+\DoxyCodeLine{106         FR20 = 37,          \textcolor{comment}{// Fujitsu FR20 */}}
+\DoxyCodeLine{107         RH32 = 38,          \textcolor{comment}{// TRW RH-\/32 */}}
+\DoxyCodeLine{108         RCE = 39,           \textcolor{comment}{// Motorola RCE */}}
+\DoxyCodeLine{109         ARM = 40,           \textcolor{comment}{// ARM */}}
+\DoxyCodeLine{110         FAKE\_ALPHA = 41,    \textcolor{comment}{// Digital Alpha */}}
+\DoxyCodeLine{111         SH = 42,            \textcolor{comment}{// Hitachi SH */}}
+\DoxyCodeLine{112         SPARCV9 = 43,       \textcolor{comment}{// SPARC v9 64-\/bit */}}
+\DoxyCodeLine{113         TRICORE = 44,       \textcolor{comment}{// Siemens Tricore */}}
+\DoxyCodeLine{114         ARC = 45,           \textcolor{comment}{// Argonaut RISC Core */}}
+\DoxyCodeLine{115         H8\_300 = 46,        \textcolor{comment}{// Hitachi H8/300 */}}
+\DoxyCodeLine{116         H8\_300H = 47,       \textcolor{comment}{// Hitachi H8/300H */}}
+\DoxyCodeLine{117         H8S = 48,           \textcolor{comment}{// Hitachi H8S */}}
+\DoxyCodeLine{118         H8\_500 = 49,        \textcolor{comment}{// Hitachi H8/500 */}}
+\DoxyCodeLine{119         IA\_64 = 50,         \textcolor{comment}{// Intel Merced */}}
+\DoxyCodeLine{120         MIPS\_X = 51,        \textcolor{comment}{// Stanford MIPS-\/X */}}
+\DoxyCodeLine{121         COLDFIRE = 52,      \textcolor{comment}{// Motorola Coldfire */}}
+\DoxyCodeLine{122         M68HC12 = 53,       \textcolor{comment}{// Motorola M68HC12 */}}
+\DoxyCodeLine{123         MMA = 54,           \textcolor{comment}{// Fujitsu MMA Multimedia Accelerator */}}
+\DoxyCodeLine{124         PCP = 55,           \textcolor{comment}{// Siemens PCP */}}
+\DoxyCodeLine{125         NCPU = 56,          \textcolor{comment}{// Sony nCPU embeeded RISC */}}
+\DoxyCodeLine{126         NDR1 = 57,          \textcolor{comment}{// Denso NDR1 microprocessor */}}
+\DoxyCodeLine{127         STARCORE = 58,      \textcolor{comment}{// Motorola Start*Core processor */}}
+\DoxyCodeLine{128         ME16 = 59,          \textcolor{comment}{// Toyota ME16 processor */}}
+\DoxyCodeLine{129         ST100 = 60,         \textcolor{comment}{// STMicroelectronic ST100 processor */}}
+\DoxyCodeLine{130         TINYJ = 61,         \textcolor{comment}{// Advanced Logic Corp. Tinyj emb.fam */}}
+\DoxyCodeLine{131         X86\_64 = 62,        \textcolor{comment}{// AMD x86-\/64 architecture */}}
+\DoxyCodeLine{132         PDSP = 63,          \textcolor{comment}{// Sony DSP Processor */}}
+\DoxyCodeLine{133         PDP10 = 64,         \textcolor{comment}{// Digital PDP-\/10 */}}
+\DoxyCodeLine{134         PDP11 = 65,         \textcolor{comment}{// Digital PDP-\/11 */}}
+\DoxyCodeLine{135         FX66 = 66,          \textcolor{comment}{// Siemens FX66 microcontroller */}}
+\DoxyCodeLine{136         ST9PLUS = 67,       \textcolor{comment}{// STMicroelectronics ST9+ 8/16 mc */}}
+\DoxyCodeLine{137         ST7 = 68,           \textcolor{comment}{// STmicroelectronics ST7 8 bit mc */}}
+\DoxyCodeLine{138         M68HC16 = 69,       \textcolor{comment}{// Motorola MC68HC16 microcontroller */}}
+\DoxyCodeLine{139         M68HC11 = 70,       \textcolor{comment}{// Motorola MC68HC11 microcontroller */}}
+\DoxyCodeLine{140         M68HC08 = 71,       \textcolor{comment}{// Motorola MC68HC08 microcontroller */}}
+\DoxyCodeLine{141         M68HC05 = 72,       \textcolor{comment}{// Motorola MC68HC05 microcontroller */}}
+\DoxyCodeLine{142         SVX = 73,           \textcolor{comment}{// Silicon Graphics SVx */}}
+\DoxyCodeLine{143         ST19 = 74,          \textcolor{comment}{// STMicroelectronics ST19 8 bit mc */}}
+\DoxyCodeLine{144         VAX = 75,           \textcolor{comment}{// Digital VAX */}}
+\DoxyCodeLine{145         CRIS = 76,          \textcolor{comment}{// Axis Communications 32-\/bit emb.proc */}}
+\DoxyCodeLine{146         JAVELIN = 77,       \textcolor{comment}{// Infineon Technologies 32-\/bit emb.proc */}}
+\DoxyCodeLine{147         FIREPATH = 78,      \textcolor{comment}{// Element 14 64-\/bit DSP Processor */}}
+\DoxyCodeLine{148         ZSP = 79,           \textcolor{comment}{// LSI Logic 16-\/bit DSP Processor */}}
+\DoxyCodeLine{149         MMIX = 80,          \textcolor{comment}{// Donald Knuth's educational 64-\/bit proc */}}
+\DoxyCodeLine{150         HUANY = 81,         \textcolor{comment}{// Harvard University machine-\/independent object files */}}
+\DoxyCodeLine{151         PRISM = 82,         \textcolor{comment}{// SiTera Prism */}}
+\DoxyCodeLine{152         AVR = 83,           \textcolor{comment}{// Atmel AVR 8-\/bit microcontroller */}}
+\DoxyCodeLine{153         FR30 = 84,          \textcolor{comment}{// Fujitsu FR30 */}}
+\DoxyCodeLine{154         D10V = 85,          \textcolor{comment}{// Mitsubishi D10V */}}
+\DoxyCodeLine{155         D30V = 86,          \textcolor{comment}{// Mitsubishi D30V */}}
+\DoxyCodeLine{156         V850 = 87,          \textcolor{comment}{// NEC v850 */}}
+\DoxyCodeLine{157         M32R = 88,          \textcolor{comment}{// Mitsubishi M32R */}}
+\DoxyCodeLine{158         MN10300 = 89,       \textcolor{comment}{// Matsushita MN10300 */}}
+\DoxyCodeLine{159         MN10200 = 90,       \textcolor{comment}{// Matsushita MN10200 */}}
+\DoxyCodeLine{160         PJ = 91,            \textcolor{comment}{// picoJava */}}
+\DoxyCodeLine{161         OPENRISC = 92,      \textcolor{comment}{// OpenRISC 32-\/bit embedded processor */}}
+\DoxyCodeLine{162         ARC\_COMPACT = 93,   \textcolor{comment}{// ARC International ARCompact */}}
+\DoxyCodeLine{163         XTENSA = 94,        \textcolor{comment}{// Tensilica Xtensa Architecture */}}
+\DoxyCodeLine{164         VIDEOCORE = 95,     \textcolor{comment}{// Alphamosaic VideoCore */}}
+\DoxyCodeLine{165         TMM\_GPP = 96,       \textcolor{comment}{// Thompson Multimedia General Purpose Proc */}}
+\DoxyCodeLine{166         NS32K = 97,         \textcolor{comment}{// National Semi. 32000 */}}
+\DoxyCodeLine{167         TPC = 98,           \textcolor{comment}{// Tenor Network TPC */}}
+\DoxyCodeLine{168         SNP1K = 99,         \textcolor{comment}{// Trebia SNP 1000 */}}
+\DoxyCodeLine{169         ST200 = 100,        \textcolor{comment}{// STMicroelectronics ST200 */}}
+\DoxyCodeLine{170         IP2K = 101,         \textcolor{comment}{// Ubicom IP2xxx */}}
+\DoxyCodeLine{171         MAX = 102,          \textcolor{comment}{// MAX processor */}}
+\DoxyCodeLine{172         CR = 103,           \textcolor{comment}{// National Semi. CompactRISC */}}
+\DoxyCodeLine{173         F2MC16 = 104,       \textcolor{comment}{// Fujitsu F2MC16 */}}
+\DoxyCodeLine{174         MSP430 = 105,       \textcolor{comment}{// Texas Instruments msp430 */}}
+\DoxyCodeLine{175         BLACKFIN = 106,     \textcolor{comment}{// Analog Devices Blackfin DSP */}}
+\DoxyCodeLine{176         SE\_C33 = 107,       \textcolor{comment}{// Seiko Epson S1C33 family */}}
+\DoxyCodeLine{177         SEP = 108,          \textcolor{comment}{// Sharp embedded microprocessor */}}
+\DoxyCodeLine{178         ARCA = 109,         \textcolor{comment}{// Arca RISC */}}
+\DoxyCodeLine{179         UNICORE = 110,      \textcolor{comment}{// PKU-\/Unity \& MPRC Peking Uni. mc series */}}
+\DoxyCodeLine{180         EXCESS = 111,       \textcolor{comment}{// eXcess configurable cpu */}}
+\DoxyCodeLine{181         DXP = 112,          \textcolor{comment}{// Icera Semi. Deep Execution Processor */}}
+\DoxyCodeLine{182         ALTERA\_NIOS2 = 113, \textcolor{comment}{// Altera Nios II */}}
+\DoxyCodeLine{183         CRX = 114,          \textcolor{comment}{// National Semi. CompactRISC CRX */}}
+\DoxyCodeLine{184         XGATE = 115,        \textcolor{comment}{// Motorola XGATE */}}
+\DoxyCodeLine{185         C166 = 116,         \textcolor{comment}{// Infineon C16x/XC16x */}}
+\DoxyCodeLine{186         M16C = 117,         \textcolor{comment}{// Renesas M16C */}}
+\DoxyCodeLine{187         DSPIC30F = 118,     \textcolor{comment}{// Microchip Technology dsPIC30F */}}
+\DoxyCodeLine{188         CE = 119,           \textcolor{comment}{// Freescale Communication Engine RISC */}}
+\DoxyCodeLine{189         M32C = 120,         \textcolor{comment}{// Renesas M32C */}}
+\DoxyCodeLine{190         \textcolor{comment}{// reserved 121-\/130}}
+\DoxyCodeLine{191         TSK3000 = 131,       \textcolor{comment}{// Altium TSK3000 */}}
+\DoxyCodeLine{192         RS08 = 132,          \textcolor{comment}{// Freescale RS08 */}}
+\DoxyCodeLine{193         SHARC = 133,         \textcolor{comment}{// Analog Devices SHARC family */}}
+\DoxyCodeLine{194         ECOG2 = 134,         \textcolor{comment}{// Cyan Technology eCOG2 */}}
+\DoxyCodeLine{195         SCORE7 = 135,        \textcolor{comment}{// Sunplus S+core7 RISC */}}
+\DoxyCodeLine{196         DSP24 = 136,         \textcolor{comment}{// New Japan Radio (NJR) 24-\/bit DSP */}}
+\DoxyCodeLine{197         VIDEOCORE3 = 137,    \textcolor{comment}{// Broadcom VideoCore III */}}
+\DoxyCodeLine{198         LATTICEMICO32 = 138, \textcolor{comment}{// RISC for Lattice FPGA */}}
+\DoxyCodeLine{199         SE\_C17 = 139,        \textcolor{comment}{// Seiko Epson C17 */}}
+\DoxyCodeLine{200         TI\_C6000 = 140,      \textcolor{comment}{// Texas Instruments TMS320C6000 DSP */}}
+\DoxyCodeLine{201         TI\_C2000 = 141,      \textcolor{comment}{// Texas Instruments TMS320C2000 DSP */}}
+\DoxyCodeLine{202         TI\_C5500 = 142,      \textcolor{comment}{// Texas Instruments TMS320C55x DSP */}}
+\DoxyCodeLine{203         TI\_ARP32 = 143,      \textcolor{comment}{// Texas Instruments App. Specific RISC */}}
+\DoxyCodeLine{204         TI\_PRU = 144,        \textcolor{comment}{// Texas Instruments Prog. Realtime Unit */}}
+\DoxyCodeLine{205         \textcolor{comment}{// reserved 145-\/159}}
+\DoxyCodeLine{206         MMDSP\_PLUS = 160,  \textcolor{comment}{// STMicroelectronics 64bit VLIW DSP */}}
+\DoxyCodeLine{207         CYPRESS\_M8C = 161, \textcolor{comment}{// Cypress M8C */}}
+\DoxyCodeLine{208         R32C = 162,        \textcolor{comment}{// Renesas R32C */}}
+\DoxyCodeLine{209         TRIMEDIA = 163,    \textcolor{comment}{// NXP Semi. TriMedia */}}
+\DoxyCodeLine{210         QDSP6 = 164,       \textcolor{comment}{// QUALCOMM DSP6 */}}
+\DoxyCodeLine{211         I8051 = 165,       \textcolor{comment}{// Intel 8051 and variants */}}
+\DoxyCodeLine{212         STXP7X = 166,      \textcolor{comment}{// STMicroelectronics STxP7x */}}
+\DoxyCodeLine{213         NDS32 = 167,       \textcolor{comment}{// Andes Tech. compact code emb. RISC */}}
+\DoxyCodeLine{214         ECOG1X = 168,      \textcolor{comment}{// Cyan Technology eCOG1X */}}
+\DoxyCodeLine{215         MAXQ30 = 169,      \textcolor{comment}{// Dallas Semi. MAXQ30 mc */}}
+\DoxyCodeLine{216         XIMO16 = 170,      \textcolor{comment}{// New Japan Radio (NJR) 16-\/bit DSP */}}
+\DoxyCodeLine{217         MANIK = 171,       \textcolor{comment}{// M2000 Reconfigurable RISC */}}
+\DoxyCodeLine{218         CRAYNV2 = 172,     \textcolor{comment}{// Cray NV2 vector architecture */}}
+\DoxyCodeLine{219         RX = 173,          \textcolor{comment}{// Renesas RX */}}
+\DoxyCodeLine{220         METAG = 174,       \textcolor{comment}{// Imagination Tech. META */}}
+\DoxyCodeLine{221         MCST\_ELBRUS = 175, \textcolor{comment}{// MCST Elbrus */}}
+\DoxyCodeLine{222         ECOG16 = 176,      \textcolor{comment}{// Cyan Technology eCOG16 */}}
+\DoxyCodeLine{223         CR16 = 177,        \textcolor{comment}{// National Semi. CompactRISC CR16 */}}
+\DoxyCodeLine{224         ETPU = 178,        \textcolor{comment}{// Freescale Extended Time Processing Unit */}}
+\DoxyCodeLine{225         SLE9X = 179,       \textcolor{comment}{// Infineon Tech. SLE9X */}}
+\DoxyCodeLine{226         L10M = 180,        \textcolor{comment}{// Intel L10M */}}
+\DoxyCodeLine{227         K10M = 181,        \textcolor{comment}{// Intel K10M */}}
+\DoxyCodeLine{228         \textcolor{comment}{// reserved 182}}
+\DoxyCodeLine{229         AARCH64 = 183, \textcolor{comment}{// ARM AARCH64 }}
+\DoxyCodeLine{230         \textcolor{comment}{// reserved 184}}
+\DoxyCodeLine{231         AVR32 = 185,       \textcolor{comment}{// Amtel 32-\/bit microprocessor */}}
+\DoxyCodeLine{232         STM8 = 186,        \textcolor{comment}{// STMicroelectronics STM8 */}}
+\DoxyCodeLine{233         TILE64 = 187,      \textcolor{comment}{// Tilera TILE64 */}}
+\DoxyCodeLine{234         TILEPRO = 188,     \textcolor{comment}{// Tilera TILEPro */}}
+\DoxyCodeLine{235         MICROBLAZE = 189,  \textcolor{comment}{// Xilinx MicroBlaze */}}
+\DoxyCodeLine{236         CUDA = 190,        \textcolor{comment}{// NVIDIA CUDA */}}
+\DoxyCodeLine{237         TILEGX = 191,      \textcolor{comment}{// Tilera TILE-\/Gx */}}
+\DoxyCodeLine{238         CLOUDSHIELD = 192, \textcolor{comment}{// CloudShield */}}
+\DoxyCodeLine{239         COREA\_1ST = 193,   \textcolor{comment}{// KIPO-\/KAIST Core-\/A 1st gen. */}}
+\DoxyCodeLine{240         COREA\_2ND = 194,   \textcolor{comment}{// KIPO-\/KAIST Core-\/A 2nd gen. */}}
+\DoxyCodeLine{241         ARCV2 = 195,       \textcolor{comment}{// Synopsys ARCv2 ISA.  */}}
+\DoxyCodeLine{242         OPEN8 = 196,       \textcolor{comment}{// Open8 RISC */}}
+\DoxyCodeLine{243         RL78 = 197,        \textcolor{comment}{// Renesas RL78 */}}
+\DoxyCodeLine{244         VIDEOCORE5 = 198,  \textcolor{comment}{// Broadcom VideoCore V */}}
+\DoxyCodeLine{245         R78KOR = 199,      \textcolor{comment}{// Renesas 78KOR */}}
+\DoxyCodeLine{246         F56800EX = 200,    \textcolor{comment}{// Freescale 56800EX DSC */}}
+\DoxyCodeLine{247         BA1 = 201,         \textcolor{comment}{// Beyond BA1 */}}
+\DoxyCodeLine{248         BA2 = 202,         \textcolor{comment}{// Beyond BA2 */}}
+\DoxyCodeLine{249         XCORE = 203,       \textcolor{comment}{// XMOS xCORE */}}
+\DoxyCodeLine{250         MCHP\_PIC = 204,    \textcolor{comment}{// Microchip 8-\/bit PIC(r) */}}
+\DoxyCodeLine{251         \textcolor{comment}{// reserved 205-\/209}}
+\DoxyCodeLine{252         KM32 = 210,        \textcolor{comment}{// KM211 KM32 */}}
+\DoxyCodeLine{253         KMX32 = 211,       \textcolor{comment}{// KM211 KMX32 */}}
+\DoxyCodeLine{254         EMX16 = 212,       \textcolor{comment}{// KM211 KMX16 */}}
+\DoxyCodeLine{255         EMX8 = 213,        \textcolor{comment}{// KM211 KMX8 */}}
+\DoxyCodeLine{256         KVARC = 214,       \textcolor{comment}{// KM211 KVARC */}}
+\DoxyCodeLine{257         CDP = 215,         \textcolor{comment}{// Paneve CDP */}}
+\DoxyCodeLine{258         COGE = 216,        \textcolor{comment}{// Cognitive Smart Memory Processor */}}
+\DoxyCodeLine{259         COOL = 217,        \textcolor{comment}{// Bluechip CoolEngine */}}
+\DoxyCodeLine{260         NORC = 218,        \textcolor{comment}{// Nanoradio Optimized RISC */}}
+\DoxyCodeLine{261         CSR\_KALIMBA = 219, \textcolor{comment}{// CSR Kalimba */}}
+\DoxyCodeLine{262         Z80 = 220,         \textcolor{comment}{// Zilog Z80 */}}
+\DoxyCodeLine{263         VISIUM = 221,      \textcolor{comment}{// Controls and Data Services VISIUMcore */}}
+\DoxyCodeLine{264         FT32 = 222,        \textcolor{comment}{// FTDI Chip FT32 */}}
+\DoxyCodeLine{265         MOXIE = 223,       \textcolor{comment}{// Moxie processor */}}
+\DoxyCodeLine{266         AMDGPU = 224,      \textcolor{comment}{// AMD GPU */}}
+\DoxyCodeLine{267         \textcolor{comment}{// reserved 225-\/242}}
+\DoxyCodeLine{268         RISCV = 243, \textcolor{comment}{// RISC-\/V}}
+\DoxyCodeLine{269 }
+\DoxyCodeLine{270         BPF = 247,  \textcolor{comment}{// Linux BPF -\/-\/ in-\/kernel virtual machine}}
+\DoxyCodeLine{271         CSKY = 252, \textcolor{comment}{// C-\/SKY}}
+\DoxyCodeLine{272 }
+\DoxyCodeLine{273         NUM = 253}
+\DoxyCodeLine{274 }
+\DoxyCodeLine{275     \};}
+\DoxyCodeLine{276 }
+\DoxyCodeLine{277     \textcolor{comment}{/* Legal values for ELF Version (version).  */}}
+\DoxyCodeLine{278     \textcolor{keyword}{enum class} EElfVersion : UWord}
+\DoxyCodeLine{279     \{}
+\DoxyCodeLine{280         NONE = 0,    \textcolor{comment}{/* Invalid ELF version */}}
+\DoxyCodeLine{281         CURRENT = 1, \textcolor{comment}{/* Current version */}}
+\DoxyCodeLine{282         NUM = 2}
+\DoxyCodeLine{283     \};}
+\DoxyCodeLine{284 }
+\DoxyCodeLine{285 \}}
+
+\end{DoxyCode}

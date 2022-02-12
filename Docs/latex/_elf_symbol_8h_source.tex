@@ -1,0 +1,96 @@
+\hypertarget{_elf_symbol_8h_source}{}\doxysection{Elf\+Symbol.\+h}
+\label{_elf_symbol_8h_source}\index{Framework/Source/Core/FileFormats/ELF/ElfComponents/ElfSymbol.h@{Framework/Source/Core/FileFormats/ELF/ElfComponents/ElfSymbol.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <Core/FileFormats/ELF/ElfDefines.h>}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{comment}{/* How to extract and insert information held in the symbol Info field.  */}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#define ELF32\_ST\_BIND(val) (((unsigned char)(val)) >> 4)}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#define ELF32\_ST\_TYPE(val) ((val)\&0xf)}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#define ELF32\_ST\_INFO(bind, type) (((bind) << 4) + ((type)\&0xf))}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{comment}{/* Both ElfSymbol32 and ElfSymbol64 use the same one-\/byte symbol Info field.  */}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define ELF64\_ST\_BIND(val) ELF32\_ST\_BIND(val)}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#define ELF64\_ST\_TYPE(val) ELF32\_ST\_TYPE(val)}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#define ELF64\_ST\_INFO(bind, type) ELF32\_ST\_INFO((bind), (type))}}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{comment}{/* How to extract and insert information held in the symbol Other field.  */}}
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#define ELF32\_ST\_VISIBILITY(o) ((o)\&0x03)}}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19 \textcolor{comment}{/* For ELF64 the definitions are the same.  */}}
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#define ELF64\_ST\_VISIBILITY(o) ELF32\_ST\_VISIBILITY(o)}}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22 \textcolor{keyword}{namespace }VS}
+\DoxyCodeLine{23 \{}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25     \textcolor{keyword}{enum class} EElfSymbolBindingInfo : UByte;}
+\DoxyCodeLine{26     \textcolor{keyword}{enum class} EElfSymbolTypeInfo : UByte;}
+\DoxyCodeLine{27     \textcolor{keyword}{enum class} EElfSymbolVisibility : UByte;}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29     \textcolor{comment}{// Symbols}}
+\DoxyCodeLine{30     \textcolor{keyword}{struct }\mbox{\hyperlink{struct_v_s_1_1_elf_symbol32}{ElfSymbol32}}}
+\DoxyCodeLine{31     \{}
+\DoxyCodeLine{32         UWord Name;                 \textcolor{comment}{/* Symbol name (string tbl index) */}}
+\DoxyCodeLine{33         Address32 Value;            \textcolor{comment}{/* Symbol value */}}
+\DoxyCodeLine{34         UWord Size;                 \textcolor{comment}{/* Symbol size */}}
+\DoxyCodeLine{35         UByte Info;                 \textcolor{comment}{/* Symbol type and binding */}}
+\DoxyCodeLine{36         EElfSymbolVisibility Other; \textcolor{comment}{/* Symbol visibility */}}
+\DoxyCodeLine{37         ElfSectionIndex32 SectionIndex;  \textcolor{comment}{/* Section index */}}
+\DoxyCodeLine{38     \};}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     \textcolor{keyword}{struct }\mbox{\hyperlink{struct_v_s_1_1_elf_symbol64}{ElfSymbol64}}}
+\DoxyCodeLine{41     \{}
+\DoxyCodeLine{42         UWord Name;                 \textcolor{comment}{/* Symbol name (string tbl index) */}}
+\DoxyCodeLine{43         UByte Info;                 \textcolor{comment}{/* Symbol type and binding */}}
+\DoxyCodeLine{44         EElfSymbolVisibility Other; \textcolor{comment}{/* Symbol visibility */}}
+\DoxyCodeLine{45         ElfSectionIndex64 SectionIndex;  \textcolor{comment}{/* Section index */}}
+\DoxyCodeLine{46         Address64 Value;            \textcolor{comment}{/* Symbol value */}}
+\DoxyCodeLine{47         UDoubleWord Size;           \textcolor{comment}{/* Symbol size */}}
+\DoxyCodeLine{48     \};}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50     \textcolor{comment}{/* Legal values for ST\_BIND subfield of st\_info (symbol binding).  */}}
+\DoxyCodeLine{51     \textcolor{keyword}{enum class} EElfSymbolBindingInfo : UByte}
+\DoxyCodeLine{52     \{}
+\DoxyCodeLine{53         LOCAL = 0,       \textcolor{comment}{/* Local symbol */}}
+\DoxyCodeLine{54         GLOBAL = 1,      \textcolor{comment}{/* Global symbol */}}
+\DoxyCodeLine{55         WEAK = 2,        \textcolor{comment}{/* Weak symbol */}}
+\DoxyCodeLine{56         NUM = 3,         \textcolor{comment}{/* Number of defined types.  */}}
+\DoxyCodeLine{57         LOOS = 10,       \textcolor{comment}{/* Start of OS-\/specific */}}
+\DoxyCodeLine{58         GNU\_UNIQUE = 10, \textcolor{comment}{/* Unique symbol.  */}}
+\DoxyCodeLine{59         HIOS = 12,       \textcolor{comment}{/* End of OS-\/specific */}}
+\DoxyCodeLine{60         LOPROC = 13,     \textcolor{comment}{/* Start of processor-\/specific */}}
+\DoxyCodeLine{61         HIPROC = 15      \textcolor{comment}{/* End of processor-\/specific */}}
+\DoxyCodeLine{62     \};}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64     \textcolor{keyword}{enum class} EElfSymbolTypeInfo : UByte}
+\DoxyCodeLine{65     \{}
+\DoxyCodeLine{66         NOTYPE = 0,     \textcolor{comment}{/* Symbol type is unspecified */}}
+\DoxyCodeLine{67         OBJECT = 1,     \textcolor{comment}{/* Symbol is a data object */}}
+\DoxyCodeLine{68         FUNC = 2,       \textcolor{comment}{/* Symbol is a code object */}}
+\DoxyCodeLine{69         SECTION = 3,    \textcolor{comment}{/* Symbol associated with a section */}}
+\DoxyCodeLine{70         FILE = 4,       \textcolor{comment}{/* Symbol's name is file name */}}
+\DoxyCodeLine{71         COMMON = 5,     \textcolor{comment}{/* Symbol is a common data object */}}
+\DoxyCodeLine{72         TLS = 6,        \textcolor{comment}{/* Symbol is thread-\/local data object*/}}
+\DoxyCodeLine{73         NUM = 7,        \textcolor{comment}{/* Number of defined types.  */}}
+\DoxyCodeLine{74         LOOS = 10,      \textcolor{comment}{/* Start of OS-\/specific */}}
+\DoxyCodeLine{75         GNU\_IFUNC = 10, \textcolor{comment}{/* Symbol is indirect code object */}}
+\DoxyCodeLine{76         HIOS = 12,      \textcolor{comment}{/* End of OS-\/specific */}}
+\DoxyCodeLine{77         LOPROC = 13,    \textcolor{comment}{/* Start of processor-\/specific */}}
+\DoxyCodeLine{78         HIPROC = 15,    \textcolor{comment}{/* End of processor-\/specific */}}
+\DoxyCodeLine{79     \};}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81     \textcolor{comment}{/* Symbol visibility specification encoded in the symbol Other field.  */}}
+\DoxyCodeLine{82     \textcolor{keyword}{enum class} EElfSymbolVisibility : UByte}
+\DoxyCodeLine{83     \{}
+\DoxyCodeLine{84         DEFAULT = 0,  \textcolor{comment}{/* Default symbol visibility rules */}}
+\DoxyCodeLine{85         INTERNAL = 1, \textcolor{comment}{/* Processor specific hidden class */}}
+\DoxyCodeLine{86         HIDDEN = 2,   \textcolor{comment}{/* Sym unavailable in other modules */}}
+\DoxyCodeLine{87         PROTECTED = 3 \textcolor{comment}{/* Not preemptible, not exported */}}
+\DoxyCodeLine{88     \};}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90 \}}
+
+\end{DoxyCode}

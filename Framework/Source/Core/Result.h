@@ -17,7 +17,7 @@ namespace VS
 		const std::string Info = "";
 	};
 
-	// Result structure for functions that return something
+	//! Result structure for functions with non-void return values
 	template<typename T>
 	struct RResult : public Result
 	{

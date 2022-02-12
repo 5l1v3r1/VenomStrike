@@ -1,0 +1,32 @@
+\hypertarget{_disassembler_8h_source}{}\doxysection{Disassembler.\+h}
+\label{_disassembler_8h_source}\index{Framework/Source/Disassembler/Disassembler.h@{Framework/Source/Disassembler/Disassembler.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <Zydis/Decoder.h>}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <Core/Defines.h>}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <Core/FileFormats/ELF/ElfFile.h>}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{keyword}{namespace }VS}
+\DoxyCodeLine{10 \{}
+\DoxyCodeLine{11     \textcolor{keyword}{class }\mbox{\hyperlink{class_v_s_1_1_disassembler}{Disassembler}}}
+\DoxyCodeLine{12     \{}
+\DoxyCodeLine{13     \textcolor{keyword}{public}:}
+\DoxyCodeLine{14         \mbox{\hyperlink{class_v_s_1_1_disassembler}{Disassembler}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16         \textcolor{keyword}{static} \textcolor{keywordtype}{void} Init();}
+\DoxyCodeLine{17         \textcolor{keyword}{static} std::vector<Offset64> FindInstruction(\textcolor{keyword}{const} std::vector<UByte>\& MachineCode, ZydisMnemonic Instruction);}
+\DoxyCodeLine{18         \textcolor{keyword}{static} \textcolor{keywordtype}{bool} CompareInstruction(\textcolor{keyword}{const} std::vector<UByte>\& Instruction, ZydisMnemonic InstructionMnemonic);}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20         \textcolor{keyword}{static} std::vector<UByte> ExtractShellcode(\mbox{\hyperlink{class_v_s_1_1_elf_file}{ElfFile32}}\& \mbox{\hyperlink{class_v_s_1_1_file}{File}});}
+\DoxyCodeLine{21         \textcolor{keyword}{static} std::vector<UByte> ExtractShellcode(\mbox{\hyperlink{class_v_s_1_1_elf_file}{ElfFile64}}\& \mbox{\hyperlink{class_v_s_1_1_file}{File}});}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23     \textcolor{keyword}{private}:}
+\DoxyCodeLine{24         \textcolor{keyword}{static} ZydisDecoder Decoder;}
+\DoxyCodeLine{25     \};}
+\DoxyCodeLine{26 \}}
+
+\end{DoxyCode}
