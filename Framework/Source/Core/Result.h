@@ -8,6 +8,8 @@ namespace VS
 	{
 		Ok = 0,
 		GenericError = 1,
+		CommandExecutionError = 2,
+		CommandValidationError = 3
 	};
 
 	

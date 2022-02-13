@@ -11,6 +11,9 @@
 
 namespace VS
 {
+	const std::unordered_map<std::string, std::function<std::shared_ptr<Command>(const std::vector<std::string>&)>> Commander::AvailableCommands = 
+	{ {"help", Commander::MakeCommand<HelpCommand>} };
+
 	std::shared_ptr<Command> Commander::ParseCommand(const std::string& Input)
 	{
 		std::string Cmd = Trim(Input);
@@ -26,11 +29,10 @@ namespace VS
 		std::vector<std::string> Args(NumberOfArgs + 1);
 		Args = std::move(Split(Cmd, " "));
 
-		if (Args[0] == HELP_MNEMONIC)
-		{
-			return std::make_shared<HelpCommand>(Args);
-		}
-
-		return std::make_shared<Command>(Args);
+		return AvailableCommands.at("help")(Args);
+	}
+	bool Commander::Exists(const std::string& CommandMnemonic)
+	{
+		return false;
 	}
 }

@@ -5,14 +5,11 @@
 
 #include <Core/Result.h>
 
-#define HELP_MNEMONIC "help"
-
 namespace VS
 {
 	/// Parent class for commands.
 	/// The Execute() method must be implemented in all child classes. 
 	/// It has not been marked as pure virtual in order to allow general command handling through this parent class.
-	/// Commands should return an error message in the Result object if their execution was unsuccessful.
 	class Command
 	{
 	public:
@@ -21,8 +18,10 @@ namespace VS
 		static constexpr uint8_t GetMinimumRequiredParams() { return MinNumberOfParameters; }
 		static const std::string& GetBasicHelp() { return BasicHelp; }
 		
-		//! Executes the command, must be implemented in all child classes.
-		virtual Result Execute() { return Result{ EResult::GenericError, "You must use a specific instance of the Command class."}; }
+		/// Executes the command, must be implemented in all child classes.
+		/// Commands should return an error message in the Result object if their execution was unsuccessful.
+		virtual Result Execute() { return Result{ EResult::CommandExecutionError, "You must use a specific instance of the Command class."}; }
+		virtual Result Validate() { return Result{ EResult::CommandValidationError, "YYou must use a specific instance of the Command class." }; }
 	protected:
 		static const std::string Mnemonic;
 		//! The minimum number of required parameters excluding the command name.
