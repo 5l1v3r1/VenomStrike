@@ -14,7 +14,7 @@ namespace VS
 	const std::unordered_map<std::string, std::function<std::shared_ptr<Command>(const std::vector<std::string>&)>> Commander::AvailableCommands = 
 	{ {"help", Commander::MakeCommand<HelpCommand>} };
 
-	std::shared_ptr<Command> Commander::ParseCommand(const std::string& Input)
+	RResult<std::shared_ptr<Command>> Commander::ParseCommand(const std::string& Input)
 	{
 		std::string Cmd = Trim(Input);
 
@@ -29,10 +29,17 @@ namespace VS
 		std::vector<std::string> Args(NumberOfArgs + 1);
 		Args = std::move(Split(Cmd, " "));
 
-		return AvailableCommands.at("help")(Args);
+		if(CommandExists(Args[0]))
+			return RResult{ EResult::Ok, AvailableCommands.at(Args[0])(Args) };
+		else
+		{
+			return RResult{ EResult::CommandNotFound, std::format("Command {} not found!", Args[0]), std::shared_ptr<Command>(nullptr) };
+		}
+		
+
 	}
-	bool Commander::Exists(const std::string& CommandMnemonic)
+	bool Commander::CommandExists(const std::string& CommandMnemonic)
 	{
-		return false;
+		return AvailableCommands.find(CommandMnemonic) != AvailableCommands.end();
 	}
 }

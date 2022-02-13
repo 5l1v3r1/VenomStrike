@@ -15,10 +15,10 @@ namespace VS
 	class Commander
 	{
 	public:
-		static std::shared_ptr<Command> ParseCommand(const std::string& Input);
-		static bool Exists(const std::string& CommandMnemonic);
+		static RResult<std::shared_ptr<Command>> ParseCommand(const std::string& Input);
+		static bool CommandExists(const std::string& CommandMnemonic);
 
-	public:
+	private:
 		template<class Ret>
 		requires std::is_base_of<Command, Ret>::value
 		static std::shared_ptr<Command> MakeCommand(const std::vector<std::string>& Parameters)

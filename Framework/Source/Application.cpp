@@ -34,8 +34,16 @@ namespace VS
 		VS_LOG_EXTERNAL(Ext, Info, "Hello!");
 
 		// Command tests
-		std::shared_ptr<Command> Cmd = Commander::ParseCommand("help asdasd");
-		Cmd->Execute();
+		auto Cmd = Commander::ParseCommand("helpde asdasd");
+
+		if (Cmd.Ok())
+		{
+			Cmd.Val->Execute();
+		}
+		else
+		{
+			VS_LOG(Error, Cmd.GetMessage());
+		}
 
 		// Elf stuff
 		ElfFilePrototype ElfFileProto("Test.elf");
