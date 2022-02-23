@@ -32,10 +32,7 @@ namespace VS
 		}
 
 	protected:
-		inline static const std::string Mnemonic = "help";
-		inline static const std::string BasicHelp = "Provides basic help information.";
-
-	private:
-		inline static const std::string HelpMessage = "";
+		inline static constexpr std::string Mnemonic = "help";
+		inline static constexpr std::string BasicHelp = "Provides basic help information.";
 	};
 }

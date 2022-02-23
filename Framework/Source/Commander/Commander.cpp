@@ -32,11 +32,7 @@ namespace VS
 		if(CommandExists(Args[0]))
 			return RResult{ EResult::Ok, AvailableCommands.at(Args[0])(Args) };
 		else
-		{
 			return RResult{ EResult::CommandNotFound, std::format("Command {} not found!", Args[0]), std::shared_ptr<Command>(nullptr) };
-		}
-		
-
 	}
 	bool Commander::CommandExists(const std::string& CommandMnemonic)
 	{

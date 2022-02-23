@@ -23,12 +23,14 @@ namespace VS
 		virtual Result Execute() { return Result{ EResult::CommandExecutionError, "You must use a specific instance of the Command class."}; }
 		virtual Result Validate() { return Result{ EResult::CommandValidationError, "YYou must use a specific instance of the Command class." }; }
 	protected:
-		static const std::string Mnemonic;
+		static constexpr std::string Mnemonic = "";
 		//! The minimum number of required parameters excluding the command name.
 		static constexpr uint8_t MinNumberOfParameters = 0;
 		//! The command's mnemonic is always the first parameter (located at index 0).
 		std::vector<std::string> Parameters;
 		//! A basic message that is used by the "help" command when listing all available commands.
-		static const std::string BasicHelp;
+		static constexpr std::string BasicHelp = "";
+		//! A more sophisticated help message used when invoking help with the command name
+		static constexpr std::string HelpMessage = "";
 	};
 }

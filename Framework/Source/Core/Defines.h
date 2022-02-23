@@ -30,10 +30,9 @@ using Offset64 = UDoubleWord;
 // Functions for type information
 namespace VS
 {
-template <class T>
-std::underlying_type<T> ToUnderlyingType(T v)
-{
-    return static_cast<std::underlying_type<T>>(v);
-}
-
+    template <class T>
+    std::underlying_type<T> ToUnderlyingType(T v)
+    {
+        return static_cast<std::underlying_type<T>>(v);
+    }
 }

@@ -7,9 +7,6 @@
 #include <Core/Result.h>
 #include "Commands/Command.h"
 
-//! A list of indices into the AvailableCommands array
-#define HELP_MNEMONIC 0
-
 namespace VS
 {
 	class Commander

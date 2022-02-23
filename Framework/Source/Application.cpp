@@ -5,7 +5,8 @@
 #include <spdlog/spdlog.h>
 
 #include "Injectors/ShellcodeParser.h"
-#include "Disassembler/Disassembler.h"
+#include "Glands/Glands.h"
+#include "Glands/Assembly/Instruction.h"
 #include <Core/FileFormats/ELF/ElfFile.h>
 #include <Core/Log.h>
 #include <Commander/Commands/Command.h>
@@ -16,7 +17,7 @@ namespace VS
 	VApplication::VApplication()
 	{
 		Log::Init("Test");
-		Disassembler::Init();
+		Glands::Init();
 	}
 
 	VApplication::~VApplication()
@@ -29,9 +30,12 @@ namespace VS
 		std::vector<uint8_t> Shellcode = { 0x48, 0x83, 0xec, 0x08, 0x48, 0x8d, 0x3d, 0xa9, 0x0f, 0x00, 0x00, 0x31, 0xc0, 0xff, 0xd0, 0x31, 0xc0, 0x48, 0x83, 0xc4, 0x08, 0xc3, 0x0f, 0x1f, 0x80, 0x00, 0x00, 0x00, 0x00 };
 		//std::vector<std::byte> Shellcode;
 
-		std::vector<size_t> CallInstructions = Disassembler::FindInstruction(Shellcode, ZYDIS_MNEMONIC_CALL);
+		std::vector<size_t> CallInstructions = Glands::FindInstruction(Shellcode, ZYDIS_MNEMONIC_CALL);
 		VS_LOG(Info, "A");
 		VS_LOG_EXTERNAL(Ext, Info, "Hello!");
+
+		ASM::Instruction Instr(EEndian::Little);
+
 
 		// Command tests
 		auto Cmd = Commander::ParseCommand("helpde asdasd");
