@@ -9,13 +9,24 @@
 #include <Glands/Endianness.h>
 #include "Architecture.h"
 
+#include <SuperEnum/super_enum.h>
+
 namespace VS
 {
 	namespace ASM
 	{
-		VS_ENUM(EMnemonic, Enum, NOP = 1);
-		VS_ENUM(EX86Mnemonic, EMnemonic, MOV = 2);
-		VS_ENUM(EAMD64Mnemonic, EX86Mnemonic, RIP = 3);
+		enum class EX86Mnemonic : uint16_t
+		{
+			_First = 0,
+			NOP,
+
+			_Last
+		};
+
+		enum class EMnemonic : uint16_t
+		{
+			NOP = EX86Mnemonic::NOP
+		};
 
 		/// Platform agnostic wrapper for assembly instructions.
 		class Instruction
@@ -26,17 +37,17 @@ namespace VS
 			{}
 
 			EEndian GetEndianness() const { return Endianness; }
-			EArchitecture GetArchitecture() const { return Architecture; }
+			EArch GetArchitecture() const { return Architecture; }
 		private:
 			static constexpr std::vector<UByte> Opcode = {};
 			//! The instruction mnemonic.
-			static constexpr EMnemonic<UWord> Mnemonic = static_cast<EMnemonic<UWord>>(EX86Mnemonic<UWord>::MOV);
+			static const EMnemonic Mnemonic = EMnemonic::NOP;
 
 			//! The raw byte representation of the entire instruction.
 			std::vector<UByte> Raw;
 
 			EEndian Endianness;
-			EArchitecture Architecture;
+			EArch Architecture;
 		};
 	}
 }

@@ -4,7 +4,7 @@ namespace VS
 {
 	namespace ASM
 	{
-		enum class EArchitecture
+		enum class EArch
 		{
 			i386,
 			amd64

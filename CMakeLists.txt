@@ -33,6 +33,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     ${PROJECT_SOURCE_DIR}/Framework/Source
     ${PROJECT_SOURCE_DIR}/External/zydis/include
     ${PROJECT_SOURCE_DIR}/External/spdlog/include
+    ${PROJECT_SOURCE_DIR}/External/SuperEnum
     )
  
 target_link_libraries("VenomStrike" PRIVATE 

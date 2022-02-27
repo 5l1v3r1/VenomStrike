@@ -7,7 +7,9 @@ namespace VS
 {
 	namespace ASM
 	{
-		class ERegister;
+		enum class ERegister;
+		enum class EI386Register;
+		enum class EAMD64Register;
 
 		class Register
 		{
@@ -26,72 +28,173 @@ namespace VS
 			UDoubleWord Value;
 		};
 
-		template<typename T>
-		class ERegister : public Enum<T>
+		//! Enumeration class for i386 architecture registers
+		enum class EI386Register : uint8_t
 		{
-		public:
-			enum : T
-			{
-				
-			};
+			_First,
+			CS, //! Code Segment
+			DS, //! Data Segment
+			ES, //! Extra Segment
+			FS, //! F Segment
+			GS, //! G Segment
+			SS, //! Stack Segment
+			
+			IP, //! Instruction pointer 16-bit 
+			EIP, //! Instruction pointer 32-bit
+			
+			// General-purpose registers
+			AL,
+			AX,
+			EAX,
+			
+			CL,
+			CX,
+			ECX,
+			
+			DL,
+			DX,
+			EDX,
+			
+			BL,
+			BX,
+			EBX,
+
+			SP,
+			ESP,
+			
+			BP,
+			EBP,
+
+			SI,
+			ESI,
+
+			DI,
+			EDI,
+			EFLAGS,
+			_Last
 		};
 
-		template<typename T>
-		class EX86Register : public EX86Register<T>
+		//! Enumeration class for amd64 registers
+		enum class EAMD64Register : uint8_t
 		{
-		public:
-			enum : T
-			{
-				AX
-				RAX,
-				RBX,
-				RCX,
-				RDX,
-				RSI,
-				RDI,
-				RBP,
-				RSP,
-				R8,
-				R9,
-				R10,
-				R11,
-				R12,
-				R13,
-				R14,
-				R15,
-				RFLAGS,
-				RIP
-			};
+			// Inherited from EI386Register
+			CS,
+			DS,
+			ES,
+			FS,
+			GS,
+			SS,
+
+			IP, 
+			EIP,
+
+			AL,
+			AX,
+			EAX,
+
+			CL,
+			CX,
+			ECX,
+
+			DL,
+			DX,
+			EDX,
+
+			BL,
+			BX,
+			EBX,
+
+			SP,
+			ESP,
+
+			BP,
+			EBP,
+
+			SI,
+			ESI,
+
+			DI,
+			EDI,
+
+			_First = EI386Register::_Last,
+			// Actual AMD64 Register entries
+			RAX,
+			RBX,
+			RCX,
+			RDX,
+			RSI,
+			RDI,
+			RBP,
+			RSP,
+			RIP,
+			RFLAGS,
+			R9,
+			R10,
+			R11,
+			R12,
+			R13,
+			R14,
+			R15
+			_Last
 		};
 
-		template<typename T>
-		class EAMD64Register : public EX86Register<T>
+		enum class ERegister : uint8_t
 		{
-		public:
-			enum : T
-			{
-				AX
-				RAX,
-				RBX,
-				RCX,
-				RDX,
-				RSI,
-				RDI,
-				RBP,
-				RSP,
-				R8,
-				R9,
-				R10,
-				R11,
-				R12,
-				R13,
-				R14,
-				R15,
-				RFLAGS,
-				RIP
-			};
-		};
+			CS = EI386Register::_First + 1,
+			DS,
+			ES,
+			FS,
+			GS,
+			SS,
 
-		
+			IP,
+			EIP,
+
+			AL,
+			AX,
+			EAX,
+
+			CL,
+			CX,
+			ECX,
+
+			DL,
+			DX,
+			EDX,
+
+			BL,
+			BX,
+			EBX,
+
+			SP,
+			ESP,
+
+			BP,
+			EBP,
+
+			SI,
+			ESI,
+
+			DI,
+			EDI,
+			// Inherited from EAMD64Register
+			RAX = EAMD64Register::_First + 1,
+			RBX,
+			RCX,
+			RDX,
+			RSI,
+			RDI,
+			RBP,
+			RSP,
+			RIP,
+			RFLAGS,
+			R9,
+			R10,
+			R11,
+			R12,
+			R13,
+			R14,
+			R15
+		};	
 	}
 }

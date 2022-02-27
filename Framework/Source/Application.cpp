@@ -12,6 +12,8 @@
 #include <Commander/Commands/Command.h>
 #include <Commander/Commander.h>
 
+
+
 namespace VS
 {
 	VApplication::VApplication()
@@ -35,7 +37,7 @@ namespace VS
 		VS_LOG_EXTERNAL(Ext, Info, "Hello!");
 
 		ASM::Instruction Instr(EEndian::Little);
-
+		ASM::EMnemonic Mnem = ASM::EMnemonic::NOP;
 
 		// Command tests
 		auto Cmd = Commander::ParseCommand("helpde asdasd");
