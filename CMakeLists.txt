@@ -28,18 +28,23 @@ add_subdirectory(External/zydis)
 add_subdirectory(External/spdlog)
 
 # include_directories(External)
+add_library(asio INTERFACE)
+target_compile_options(asio INTERFACE -D ASIO_STANDALONE)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     ${PROJECT_SOURCE_DIR}/Framework/Source
     ${PROJECT_SOURCE_DIR}/External/zydis/include
     ${PROJECT_SOURCE_DIR}/External/spdlog/include
     ${PROJECT_SOURCE_DIR}/External/SuperEnum
+    ${PROJECT_SOURCE_DIR}/External/asio/include
     )
  
 target_link_libraries("VenomStrike" PRIVATE 
     "Zydis"
     "spdlog::spdlog"
+    "asio"
     )
+  
 
 target_link_directories(${PROJECT_NAME} PUBLIC
     

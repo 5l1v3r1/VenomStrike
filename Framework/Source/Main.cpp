@@ -6,7 +6,7 @@
 
 int main() 
 {
-    VS::VApplication Application;
+    VS::Application Application;
 
     try
     {

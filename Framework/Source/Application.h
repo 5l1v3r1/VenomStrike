@@ -2,11 +2,11 @@
 
 namespace VS
 {
-	class VApplication
+	class Application
 	{
 	public:
-		VApplication();
-		~VApplication();
+		Application();
+		~Application();
 		void Run();
 
 	public:
