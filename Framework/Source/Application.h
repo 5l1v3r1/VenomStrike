@@ -7,7 +7,8 @@ namespace VS
 	public:
 		Application();
 		~Application();
-		void Run();
+		virtual void Run();
+		virtual void Terminate();
 
 	public:
 		
